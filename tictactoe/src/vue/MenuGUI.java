@@ -2,21 +2,28 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import launcher.LauncherGUI;
 import controler.TicTacToeControler;
 
 public class MenuGUI extends JFrame implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, java.util.Observer{
 	private JButton boutonJouer = new JButton("Jouer");
 	private JButton boutonQuitter = new JButton("Quitter");
-	
+	private JLabel label = new JLabel("");
 	public MenuGUI(java.lang.String name, TicTacToeControler chessGameControler, java.awt.Dimension boardSize){
 		super(name);
 		this.setSize(boardSize);
@@ -25,20 +32,30 @@ public class MenuGUI extends JFrame implements java.awt.event.MouseListener, jav
 	
 	public void init(){
 		JPanel panel = new JPanel();
-		JPanel panel2 = new JPanel();
-		this.getContentPane().setLayout(new BorderLayout());
-		panel.setLayout(new BorderLayout());
-		panel2.setLayout(new BorderLayout());
-		panel.add(boutonJouer);
-		panel2.add(boutonQuitter);
-		panel.setSize(350, 350);
-		panel2.setSize(350, 350);
-		panel.setLocation(100, 300);
-		panel2.setLocation(600, 300);
-		this.getContentPane().add(panel);
-		this.getContentPane().add(panel2);
-	}
+		setLayout(new FlowLayout(0 , 250, 250));
 
+		panel.add(boutonJouer);
+		panel.add(boutonQuitter);
+		boutonJouer.addActionListener(new Jouer());
+		boutonQuitter.addActionListener(new Quitter());
+		
+		this.getContentPane().add(panel);
+		this.getContentPane().add(label);
+	}
+	
+	public class Jouer implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			label.setText("Vous avez cliqué sur " + arg0.getActionCommand());
+		}
+	}
+	
+	public class Quitter implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			label.setText("Vous avez cliqué sur " +arg0.getActionCommand());
+			dispose();
+		}
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -59,8 +76,6 @@ public class MenuGUI extends JFrame implements java.awt.event.MouseListener, jav
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
