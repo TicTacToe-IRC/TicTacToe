@@ -1,16 +1,21 @@
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.util.Observable;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ParamGUI extends JFrame implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, java.util.Observer{
-	private JLabel jl;
+public class ParamGUI extends JFrame {
+	private JLabel jl, jl1, jl2;
+	private JTextField nom;
+	private JPanel jp1 = new JPanel(), jp2 = new JPanel(), jp3 = new JPanel();  
+	private JTextField nom1 = new JTextField(), 
+			nom2 = new JTextField(); 
 	
 	public ParamGUI(Dimension dim) {
 		super("Paramètres du jeu");
@@ -19,62 +24,58 @@ public class ParamGUI extends JFrame implements java.awt.event.MouseListener, ja
 	}
 	
 	public void init() {
-		jl = new JLabel("Fenêtre paramètres !");
+		jl = new JLabel("");
+		jl1 = new JLabel("");
+		jl2 = new JLabel("");
+		
 		this.getContentPane().add(jl);
 		
-		JPanel panel = new JPanel();
-		JTextField nom1 = new JTextField();
+		/* Joueur 1 */
+		this.getContentPane().setLayout(new BorderLayout());
+		nom1.setPreferredSize(new Dimension(150,30));
 		
-		JTextField nom2 = new JTextField();
+		/*
+		JPanel b1 = new JPanel();
+		 b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
+		 b1.add(nom1);
+		 b1.add(valider);
+		 
+		JPanel b2 = new JPanel();
+		 b2.setLayout(new BoxLayout(b2, BoxLayout.LINE_AXIS));
+		 jl = jl1;
+		 b2.add(jl);*/
+		 
+		//jp1.setLayout(new BoxLayout(jp1, BoxLayout.PAGE_AXIS));
+		jl = jl1;
+		nom = nom1;
+		jp1.add(nom1);
+		jp1.add(jl);
+		this.getContentPane().add(jp1, BorderLayout.WEST);
+		
+		/* Joueur 2 */
+		nom2.setPreferredSize(new Dimension(150,30));
+		
+		jl = jl2;
+		nom = nom2;
+		jp2.add(jl);
+		jp2.add(nom2);
+		this.getContentPane().add(jp2, BorderLayout.EAST);
+		
+		/* Validation */
+		
+		JButton valider = new JButton("Valider");
+		valider.setPreferredSize(new Dimension(100, 30));
+		valider.addActionListener(new Valider());
+		jp3.add(valider);
+		this.getContentPane().add(jp3, BorderLayout.SOUTH);
 
 	}
 	
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+	public class Valider implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println(nom.getText());
+			jl1.setText("Vous avez saisi " + nom1.getText());
+			jl2.setText("Vous avez saisi " + nom2.getText());
+		}
 	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
