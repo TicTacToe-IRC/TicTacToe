@@ -10,10 +10,5 @@ import model.Plateau;
 public class TicTacToe extends Observable{
 	
 	private Plateau plateau;
-	
 
-	public TicTacToe() {
-		super();
-		this.plateau = new Plateau();
-	}
 }
