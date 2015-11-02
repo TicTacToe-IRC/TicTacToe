@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 
@@ -8,6 +9,12 @@ import javax.swing.JLabel;
 
 public class ParamGUI extends JFrame implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, java.util.Observer{
 	private JLabel jl;
+	
+	public ParamGUI(Dimension dim) {
+		super("Paramètres du jeu");
+		this.setSize(dim);
+		init();
+	}
 	
 	public void init() {
 		jl = new JLabel("Fenêtre paramètres !");

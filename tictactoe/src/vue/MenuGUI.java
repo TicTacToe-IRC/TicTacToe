@@ -46,8 +46,14 @@ public class MenuGUI extends JFrame implements java.awt.event.MouseListener, jav
 	public class Jouer implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			label.setText("Vous avez cliqué sur " + arg0.getActionCommand());
-			JFrame paramGUI = new ParamGUI();
-			dispose();
+			Dimension dim = new Dimension(700,700);
+			JFrame paramGUI = new ParamGUI(dim);
+			paramGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			paramGUI.setLocation(600, 10);
+			paramGUI.setPreferredSize(dim);
+			paramGUI.pack();
+			paramGUI.setVisible(true);
+			MenuGUI.this.setVisible(false);
 		}
 	}
 	
