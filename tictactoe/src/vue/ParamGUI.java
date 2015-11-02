@@ -5,6 +5,8 @@ import java.util.Observable;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class ParamGUI extends JFrame implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, java.util.Observer{
 	private JLabel jl;
@@ -12,6 +14,12 @@ public class ParamGUI extends JFrame implements java.awt.event.MouseListener, ja
 	public void init() {
 		jl = new JLabel("Fenêtre paramètres !");
 		this.getContentPane().add(jl);
+		
+		JPanel panel = new JPanel();
+		JTextField nom1 = new JTextField();
+		
+		JTextField nom2 = new JTextField();
+
 	}
 	
 	@Override
