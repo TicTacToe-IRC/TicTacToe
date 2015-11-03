@@ -50,22 +50,21 @@ public class Pion implements Pions{
 	public String toString() {
 		return "Pion "+getName()+"[X: " + getX() + ", Y: " + getY() + "Z : " + getZ() + "]";
 	}
+
+	@Override
+	public String getNom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) {/*
 		Joueur joueur1 = new Joueur("Dan", new Couleur("gris", 120, 120, 120));
 		Pion monPion = new Pion("Pion1_J1", joueur1.getCouleur(), new Coord(1, 1, 1));
 		System.out.println(monPion);
 		
 		Joueur joueur2 = new Joueur("Nico", new Couleur("noir", 0, 0, 0));
 		Pion monPion2 = new Pion("Pion1_J2", joueur2.getCouleur(), new Coord(5, 1, 1));
-		System.out.println(monPion2);
-	}
-
-
-	@Override
-	public String getNom() {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(monPion2);*/
 	}
         
 }

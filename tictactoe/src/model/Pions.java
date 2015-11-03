@@ -12,7 +12,7 @@ public interface Pions {
 		public int getY();
 		
 		/**
-		 * @return int indice de la rangée où est positionnée le pion
+		 * @return int indice de la hauteur où est positionnée le pion
 		 */
 		public int getZ();
 		
