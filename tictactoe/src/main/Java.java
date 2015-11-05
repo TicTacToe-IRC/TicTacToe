@@ -32,10 +32,15 @@ public class Java {
 		}
 
 		plateau.afficherPlateau();*/
-		int joueurCourant = 1;
-		int x=1, y=0, sz=1;
-		/*while(!plateau.gagner(x, y, z, joueurCourant)){
-			
+		int joueurCourant = 2;
+		int x=0, y=0, z=0;
+		do{
+			if(joueurCourant == joueur1.getId()){
+				joueurCourant = joueur2.getId();
+			}
+			else{
+				joueurCourant = joueur1.getId();
+			}
 			System.out.println("Joueur " + joueurCourant +", placez un pion");
 			System.out.println("x: ");
 			Scanner sc = new Scanner(System.in);
@@ -44,8 +49,9 @@ public class Java {
 			z = sc.nextInt();
 			
 			try {
+				y = plateau.placementHauteur(x, z);
 				plateau.placerPion(x, z, joueurCourant);
-				System.out.println(x + ", " + (plateau.placementHauteur(x, z)-1) +", "+ z);
+				System.out.println(x + ", " + y +", "+ z);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -53,13 +59,8 @@ public class Java {
 			}
 			
 			plateau.afficherPlateau();
-			if(joueurCourant == joueur1.getId()){
-				joueurCourant = joueur2.getId();
-			}
-			else{
-				joueurCourant = joueur1.getId();
-			}
-		}*/
+		}
+		while(!plateau.gagner(x, y, z, joueurCourant));
 
 			System.out.println("Le joueur "+ joueurCourant + " a gagné");
 
