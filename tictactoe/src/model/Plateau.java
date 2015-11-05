@@ -37,14 +37,8 @@ public class Plateau {
 		System.out.println("");
 	}
 
-	public boolean placerPion(int x, int z, int idJoueur) throws Exception {
-		int y = placementHauteur(x, z);
-		if(y !=-1){
-			//On place le pion du joueur "joueur"
-			plateauJeu[x][y][z] = idJoueur;
-			return true;
-		}
-		throw new Exception();
+	public void placerPion(int x, int y, int z, int idJoueur){
+		plateauJeu[x][y][z] = idJoueur;
 	}
 
 	public int placementHauteur(int x, int z){
@@ -77,15 +71,94 @@ public class Plateau {
 		}
 		return idJoueur;
 	}
-
-	public boolean gagner(int x, int y, int z, int idJoueur){
+/*
+	public int gagner(int x, int y, int z, int idJoueur){
+			
 			if((plateauJeu[0][y][z]== idJoueur && plateauJeu[1][y][z]== idJoueur
 			&& plateauJeu[2][y][z]== idJoueur && plateauJeu[3][y][z]== idJoueur)
 			|| (plateauJeu[x][0][z]== idJoueur && plateauJeu[x][1][z]== idJoueur
 					&& plateauJeu[x][2][z]== idJoueur && plateauJeu[x][3][z]== idJoueur)){
-				return true;
+				return idJoueur;
 			}
 			else 
-				return false;	
+				return 0;	
+	}*/
+	
+	public int partieFinie(int x, int y, int z, int idJoueur) {
+		boolean full = true;
+		boolean gagne = false;
+
+		int xT = 0, zT =0;
+		
+		while (full && xT<4) {
+			zT = 0;
+			while (full && zT<4) {
+				if (plateauJeu[xT][3][zT] == 0) {
+					System.out.println(xT + " " + zT);
+					full = false;
+				}
+				zT++;
+			}
+			xT++;
+		}
+		
+		if (full) {
+			return -1;
+		}
+
+		for (int xDif = -1; xDif<=1 && !gagne; xDif++) {
+			for (int yDif = -1; yDif<=1 && !gagne; yDif++) {
+				for (int zDif = -1; zDif<=1 && !gagne; zDif++) {
+					int xN = x, yN = y, zN = z;
+					int xDepl = xDif, yDepl = yDif, zDepl = zDif;
+					int countVoisinsMemeId = 0;
+					boolean continuer = (xDepl!=0 || yDepl!=0 || zDepl!=0);
+					boolean invert = false;
+					while (continuer) {
+						if ((xDepl == -1 && xN == 0) || (xDepl == 1 && xN == 3) || (yDepl == -1 && yN == 0) || (yDepl == 1 && yN == 3) || (zDepl == -1 && zN == 0) || (zDepl == 1 && zN == 3)) {
+							if (!invert) {
+								invert = true;
+								xDepl = -xDepl;
+								yDepl = -yDepl;
+								zDepl = -zDepl;
+								xN = x;
+								yN = y;
+								zN = z;
+							}
+							else {
+								continuer = false;
+							}
+						}
+						xN = xN+xDepl;
+						yN = yN+yDepl;
+						zN = zN+zDepl;
+
+						if (xN<0 || xN>3 || yN<0 || yN>3 || zN<0 || zN>3) {
+							continuer = false;
+						}
+						else {
+							if (plateauJeu[xN][yN][zN] == idJoueur) {
+								countVoisinsMemeId++;
+								if (countVoisinsMemeId == 3) {
+									continuer = false;
+									gagne = true;
+
+								}
+							}
+							else {
+								continuer = false;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (gagne) {
+			return idJoueur;
+		}
+		else {
+			return 0;
+		}
 	}
 }

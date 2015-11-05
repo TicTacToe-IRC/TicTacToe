@@ -21,20 +21,11 @@ public class Java {
 		
 		Plateau plateau = new Plateau(4, 4, 4);
 		
-		//plateau.afficherPlateau();
-		/*
-		try {
-			plateau.placerPion(3, 3, joueur1.getId());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		plateau.afficherPlateau();*/
-		int joueurCourant = 2;
-		int x=0, y=0, z=0;
+		int joueurCourant = 1;
+		int x=0, y=0, z=0, fin;
 		do{
+			fin = 0;
+			
 			if(joueurCourant == joueur1.getId()){
 				joueurCourant = joueur2.getId();
 			}
@@ -48,22 +39,21 @@ public class Java {
 			System.out.print("z: ");
 			z = sc.nextInt();
 			
-			try {
 				y = plateau.placementHauteur(x, z);
-				plateau.placerPion(x, z, joueurCourant);
-				System.out.println(x + ", " + y +", "+ z);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			plateau.afficherPlateau();
-		}
-		while(!plateau.gagner(x, y, z, joueurCourant));
-
+				if(y != -1){
+					plateau.placerPion(x, y, z, joueurCourant);
+					System.out.println(x + ", " + y +", "+ z);
+					plateau.afficherPlateau();
+					fin = plateau.partieFinie(x, y, z, joueurCourant);
+				}		
+		} while(fin == 0);
+		
+		if(fin > 0)
 			System.out.println("Le joueur "+ joueurCourant + " a gagné");
-
+		
+		if(fin == -1){
+			System.out.println("Match nul");
+		}
 	}
 		
 }
