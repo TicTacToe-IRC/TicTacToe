@@ -60,7 +60,7 @@ public class MenuGUI extends JFrame implements java.awt.event.MouseListener, jav
 	public class Quitter implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			label.setText("Vous avez cliqué sur " +arg0.getActionCommand());
-			dispose();
+			System.exit(0);
 		}
 	}
 	

@@ -40,7 +40,7 @@ public class JeuGUI extends JFrame implements java.util.Observer{
 		panel.add(boutonJouer);
 		panel.add(boutonQuitter);
 		//boutonJouer.addActionListener(new Jouer());
-		//boutonQuitter.addActionListener(new Quitter());
+		boutonQuitter.addActionListener(new Quitter());
 		
 		//JPanel jp = new PlateauGUI();
 
@@ -58,6 +58,13 @@ public class JeuGUI extends JFrame implements java.util.Observer{
 		this.setLayout(new BorderLayout());
 		this.getContentPane().add(new PlateauGUI(),BorderLayout.CENTER);
 		this.getContentPane().add(jp_east,BorderLayout.EAST);
+	}
+	
+	public class Quitter implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			label.setText("Vous avez cliqué sur " +arg0.getActionCommand());
+			System.exit(0);
+		}
 	}
 
 	@Override

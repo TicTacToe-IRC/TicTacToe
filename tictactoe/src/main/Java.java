@@ -34,7 +34,7 @@ public class Java {
 		plateau.afficherPlateau();*/
 		int joueurCourant = 1;
 		int x=1, y=0, sz=1;
-		while(!plateau.gagner(x, y, z, joueurCourant)){
+		/*while(!plateau.gagner(x, y, z, joueurCourant)){
 			
 			System.out.println("Joueur " + joueurCourant +", placez un pion");
 			System.out.println("x: ");
@@ -59,7 +59,7 @@ public class Java {
 			else{
 				joueurCourant = joueur1.getId();
 			}
-		}
+		}*/
 
 			System.out.println("Le joueur "+ joueurCourant + " a gagné");
 

@@ -4,22 +4,13 @@ package vue;
 
 //Etape 1 :
 //Importation des packages Java 2
-import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
-
-
 import java.io.IOException;
-
-
-
-
-
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,7 +22,6 @@ import java.util.Map;
 
 //Etape 2 :
 //Importation des packages Java 3D
-import com.sun.j3d.utils.applet.MainFrame;
 import com.sun.j3d.utils.geometry.*;
 import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.*;
@@ -41,7 +31,6 @@ import com.sun.j3d.utils.picking.behaviors.*;
 
 import javax.imageio.ImageIO;
 import javax.media.j3d.*;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.vecmath.*;
 
