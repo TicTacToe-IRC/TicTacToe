@@ -6,6 +6,11 @@ public class Plateau {
 	private int colonnes;
 	private int hauteur;
 	private int[][][] plateauJeu;
+	private Joueur joueurCourant;
+	private String Joueur1 = "Joueur1";
+	private Couleur couleur;
+	private Joueur joueur1 = new Joueur(Joueur1, couleur, 1);
+	private Joueur joueur2 = new Joueur(Joueur1, couleur, 2);
 
 
 	public Plateau(int l, int c, int h) {
@@ -20,6 +25,7 @@ public class Plateau {
 				for(int k=0; k< plateauJeu.length; k++)
 					plateauJeu[i][j][k] = 0;
 		}
+		joueurCourant = joueur1;
 	}
 
 	public void afficherPlateau(){
@@ -37,8 +43,9 @@ public class Plateau {
 		System.out.println("");
 	}
 
-	public void placerPion(int x, int y, int z, int idJoueur){
-		plateauJeu[x][y][z] = idJoueur;
+	public void placerPion(int x, int y, int z){
+		plateauJeu[x][y][z] = joueurCourant.getId();
+		switchJoueur();
 	}
 
 	public int placementHauteur(int x, int z){
@@ -62,14 +69,13 @@ public class Plateau {
 		}
 	}
 
-	public int switchJoueur(int idJoueur){
-		if(idJoueur == 1){
-			idJoueur = 2;
+	public void switchJoueur(){
+		if(joueurCourant == joueur1){
+			joueurCourant = joueur2;
 		}
 		else{
-			idJoueur = 1;
+			joueurCourant = joueur1;
 		}
-		return idJoueur;
 	}
 /*
 	public int gagner(int x, int y, int z, int idJoueur){
@@ -160,5 +166,9 @@ public class Plateau {
 		else {
 			return 0;
 		}
+	}
+	
+	public int getIdJoueurCourant() {
+		return joueurCourant.getId();
 	}
 }
