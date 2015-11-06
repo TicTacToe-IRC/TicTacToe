@@ -1,10 +1,12 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,17 +22,25 @@ import javax.swing.JPanel;
 import launcher.LauncherGUI;
 import controler.TicTacToeControler;
 
-public class MenuGUI extends JFrame implements java.awt.event.MouseListener, java.awt.event.MouseMotionListener, java.util.Observer{
+public class MenuGUI extends JPanel{
 	private JButton boutonJouer = new JButton("Jouer");
 	private JButton boutonQuitter = new JButton("Quitter");
 	private JLabel label = new JLabel("");
-	public MenuGUI(java.lang.String name, TicTacToeControler chessGameControler, java.awt.Dimension boardSize){
-		super(name);
-		this.setSize(boardSize);
+	private FcardLayout parent;
+	
+	Panel panel;
+	final static String s1 = "carte 1";
+	final static String s2 = "carte 2";
+	
+	
+	public MenuGUI(FcardLayout parent){
+		super();
+		this.parent = parent;
 		init();
 	}
 	
 	public void init(){
+
 		JPanel panel = new JPanel();
 		setLayout(new FlowLayout(0 , 250, 250));
 
@@ -39,21 +49,20 @@ public class MenuGUI extends JFrame implements java.awt.event.MouseListener, jav
 		boutonJouer.addActionListener(new Jouer());
 		boutonQuitter.addActionListener(new Quitter());
 		
-		this.getContentPane().add(panel);
-		this.getContentPane().add(label);
+		this.add(panel);
+		this.add(label);
+		
 	}
 	
 	public class Jouer implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
-			label.setText("Vous avez cliqué sur " + arg0.getActionCommand());
-			Dimension dim = new Dimension(700,700);
-			JFrame paramGUI = new ParamGUI(dim);
-			paramGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			/*label.setText("Vous avez cliqué sur " + arg0.getActionCommand());
+
+			JPanel paramGUI = new ParamGUI();
 			paramGUI.setLocation(600, 10);
-			paramGUI.setPreferredSize(dim);
-			paramGUI.pack();
 			paramGUI.setVisible(true);
-			MenuGUI.this.setVisible(false);
+			MenuGUI.this.setVisible(false);*/
+			parent.setPanelByName("param");
 		}
 	}
 	
@@ -63,50 +72,5 @@ public class MenuGUI extends JFrame implements java.awt.event.MouseListener, jav
 			System.exit(0);
 		}
 	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 }

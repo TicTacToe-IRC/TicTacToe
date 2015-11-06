@@ -8,11 +8,12 @@ import javax.swing.JFrame;
 import controler.TicTacToeControler;
 import model.Plateau;
 import model.observable.TicTacToe;
+import vue.FcardLayout;
 import vue.MenuGUI;
 
 public class LauncherGUI {
 	public static void main(String[] args) {
-		TicTacToe ticTacToe;	
+	//	TicTacToe ticTacToe;	
 		TicTacToeControler ticTacToeControler;
 		JFrame frame;	
 		Dimension dim;
@@ -20,11 +21,11 @@ public class LauncherGUI {
 	
 		dim = new Dimension(700, 700);
 		
-		ticTacToe = new TicTacToe();	
+	//	ticTacToe = new TicTacToe();	
 		ticTacToeControler = new TicTacToeControler(plateau);
 		
-		frame = new MenuGUI("Tic Tac Toe 3D", ticTacToeControler,  dim);
-		ticTacToe.addObserver((Observer) frame);
+		frame = new FcardLayout("Tic Tac Toe 3D", ticTacToeControler,  dim);
+	//	ticTacToe.addObserver((Observer) frame);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocation(600, 10);

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="tictactoe/lib/ext"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/fs03/share/users/dan.dray/home/git/TicTacToe2/tictactoe/lib/ext/j3dcore.jar"/>
+	<classpathentry kind="lib" path="/fs03/share/users/dan.dray/home/git/TicTacToe2/tictactoe/lib/ext/j3dcore-ogl_dll.jar"/>
+	<classpathentry kind="lib" path="/fs03/share/users/dan.dray/home/git/TicTacToe2/tictactoe/lib/ext/j3dutils.jar"/>
+	<classpathentry kind="lib" path="/fs03/share/users/dan.dray/home/git/TicTacToe2/tictactoe/lib/ext/vecmath.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

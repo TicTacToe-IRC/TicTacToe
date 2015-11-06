@@ -1,6 +1,6 @@
 package model;
 
-public class Couleur {
+public class Couleur implements Comparable {
 	private int r;
 	private int g;
 	private int b;
@@ -27,6 +27,11 @@ public class Couleur {
 
 	public String getNom() {
 		return nom;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		return this.getNom().compareTo(((Couleur)o).getNom());
 	}
 	
 	
