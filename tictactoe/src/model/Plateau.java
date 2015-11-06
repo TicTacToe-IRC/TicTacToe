@@ -171,4 +171,12 @@ public class Plateau {
 	public int getIdJoueurCourant() {
 		return joueurCourant.getId();
 	}
+	
+	public String getNomJoueur1() {
+		return joueur1.getNom();
+	}
+	
+	public String getNomJoueur2() {
+		return joueur2.getNom();
+	}
 }

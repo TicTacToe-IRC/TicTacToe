@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,9 +25,6 @@ import launcher.LauncherGUI;
 import controler.TicTacToeControler;
 
 public class JeuGUI extends JFrame implements java.util.Observer{
-	private JButton boutonJouer = new JButton("Jouer");
-	private JButton boutonQuitter = new JButton("Quitter");
-	private JLabel label = new JLabel("TEst");
 	private TicTacToeControler controler;
 	
 	public JeuGUI(java.lang.String name, TicTacToeControler controler, java.awt.Dimension boardSize){
@@ -37,42 +35,26 @@ public class JeuGUI extends JFrame implements java.util.Observer{
 	}
 	
 	public void init(){
-		JPanel panel = new JPanel();
 		setLayout(new FlowLayout(0 , 250, 250));
 
-		panel.add(boutonJouer);
-		panel.add(boutonQuitter);
-		//boutonJouer.addActionListener(new Jouer());
-		boutonQuitter.addActionListener(new Quitter());
+		JPanel 	jp_east = new JPanel();
+				jp_east.setPreferredSize(new Dimension(200,400));
+				jp_east.setLayout(new BoxLayout(jp_east, BoxLayout.PAGE_AXIS));
 		
-		//JPanel jp = new PlateauGUI();
-
-		//this.setContentPane(new PlateauGUI());
-
-		//this.getContentPane().add(jp);
-		JPanel jp_east = new JPanel();
-		jp_east.setLayout(new BoxLayout(jp_east, BoxLayout.PAGE_AXIS));
-		//this.getContentPane().add(panel);
-		//this.getContentPane().add(label);
-		//applet.init();
-		//applet.start();
-		jp_east.add(panel);
-		jp_east.add(label);
+		JPanel 	panelJ1 = new JPanel();
+				panelJ1.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur1()));
+		JPanel 	panelJ2 = new JPanel();
+				panelJ2.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur2()));
+		jp_east.add(panelJ1);
+		jp_east.add(panelJ2);
+		
 		this.setLayout(new BorderLayout());
 		this.getContentPane().add(new PlateauGUI(controler),BorderLayout.CENTER);
 		this.getContentPane().add(jp_east,BorderLayout.EAST);
 	}
-	
-	public class Quitter implements ActionListener{
-		public void actionPerformed(ActionEvent arg0) {
-			label.setText("Vous avez cliqué sur " +arg0.getActionCommand());
-			System.exit(0);
-		}
-	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 }

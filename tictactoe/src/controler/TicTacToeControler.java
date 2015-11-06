@@ -21,4 +21,12 @@ public class TicTacToeControler {
 	public int getIdJoueur(){
 		return plateau.getIdJoueurCourant();
 	}
+	
+	public String getNomJoueur1() {
+		return plateau.getNomJoueur1();
+	}
+	
+	public String getNomJoueur2() {
+		return plateau.getNomJoueur2();
+	}
 }
