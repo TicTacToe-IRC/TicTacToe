@@ -27,9 +27,12 @@ public class JeuGUI extends JFrame implements java.util.Observer{
 	private JButton boutonJouer = new JButton("Jouer");
 	private JButton boutonQuitter = new JButton("Quitter");
 	private JLabel label = new JLabel("TEst");
-	public JeuGUI(java.lang.String name, TicTacToeControler chessGameControler, java.awt.Dimension boardSize){
+	private TicTacToeControler controler;
+	
+	public JeuGUI(java.lang.String name, TicTacToeControler controler, java.awt.Dimension boardSize){
 		super(name);
 		this.setSize(boardSize);
+		this.controler = controler;
 		init();
 	}
 	
@@ -56,7 +59,7 @@ public class JeuGUI extends JFrame implements java.util.Observer{
 		jp_east.add(panel);
 		jp_east.add(label);
 		this.setLayout(new BorderLayout());
-		this.getContentPane().add(new PlateauGUI(),BorderLayout.CENTER);
+		this.getContentPane().add(new PlateauGUI(controler),BorderLayout.CENTER);
 		this.getContentPane().add(jp_east,BorderLayout.EAST);
 	}
 	

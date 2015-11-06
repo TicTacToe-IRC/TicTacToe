@@ -11,13 +11,13 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 
 
 
 import java.util.Map;
+
 
 
 //Etape 2 :
@@ -29,18 +29,24 @@ import com.sun.j3d.utils.picking.PickCanvas;
 import com.sun.j3d.utils.picking.PickResult;
 import com.sun.j3d.utils.picking.behaviors.*;
 
+import controler.TicTacToeControler;
+
 import javax.imageio.ImageIO;
 import javax.media.j3d.*;
 import javax.swing.JPanel;
 import javax.vecmath.*;
 
 public class PlateauGUI extends JPanel implements MouseListener {
+	TicTacToeControler controler;
 	
 	private PickCanvas pickCanvas;
-	private LinkedList<Cylinder> cylinderList;
+	private LinkedList<LinkedList> cylinderList;
 	private Map<Sphere,Switch> mapSS;
+	private Switch[][][] tabSphere1;
+	private Switch[][][] tabSphere2;
 
-public PlateauGUI() {
+public PlateauGUI(TicTacToeControler controler) {
+	this.controler = controler;
  this.setLayout(new BorderLayout());
 
  // Etape 3 :
@@ -109,6 +115,8 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	 Appearance appPlateau = new Appearance();
 	 Appearance appBaton = new Appearance();
 	 Appearance appBoule = new Appearance();
+	 			appBoule.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
+	 			appBoule.setCapability(Appearance.ALLOW_TEXTURE_READ);
 	 Appearance appFond = new Appearance();
 	
 	 Texture texture_bois1 = new TextureLoader(image_bois1).getTexture();
@@ -162,12 +170,13 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	 
 
 	 
-	 cylinderList = new LinkedList<Cylinder>();
+	 cylinderList = new LinkedList<LinkedList>();
 	 
 	 for(int i=0; i<4; i++){
+		 LinkedList<Cylinder> list = new LinkedList<Cylinder>();
 		 for(int j=0; j<4; j++){
 			 Cylinder baton = new Cylinder(0.05f,1.2f, Cylinder.GENERATE_TEXTURE_COORDS,appBaton);
-			 cylinderList.add(baton);
+			 list.add(baton);
 		      TransformGroup tg = new TransformGroup();
 		      transform = new Transform3D();
 		      Float x_cyl = i*0.4f - x_box;
@@ -179,6 +188,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		      tg.addChild(baton);
 		      plateauTG.addChild(tg);
 		 }
+		 cylinderList.add(list);
 	 }
 	 
 	 
@@ -190,6 +200,8 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	 sphereTG.setTransform(transform);
 	 
 	 mapSS = new HashMap<Sphere, Switch>();
+	 tabSphere1 = new Switch[4][4][4];
+	 tabSphere2 = new Switch[4][4][4];
 	 
 	 for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -198,9 +210,27 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 				Sphere sphere = new Sphere(0.14f, Sphere.GENERATE_TEXTURE_COORDS, appBoule);
 				Switch visibleSphere = new Switch();
 				visibleSphere.addChild(sphere);
+				visibleSphere.setCapability(Switch.ALLOW_SWITCH_READ);
+				visibleSphere.setCapability(Switch.ALLOW_SWITCH_WRITE);
+				visibleSphere.setCapability(Switch.ALLOW_CHILDREN_READ);
+				visibleSphere.setCapability(Switch.ALLOW_CHILDREN_WRITE);
 				visibleSphere.setWhichChild(Switch.CHILD_NONE);
-				visibleSphere.setWhichChild(Switch.CHILD_ALL);
-				mapSS.put(sphere, visibleSphere);
+				//visibleSphere.setWhichChild(Switch.CHILD_ALL);
+				tabSphere1[i][j][k]=visibleSphere;
+				
+				Sphere sphere2 = new Sphere(0.14f, Sphere.GENERATE_TEXTURE_COORDS, null);
+				Switch visibleSphere2 = new Switch();
+				visibleSphere2.addChild(sphere2);
+				visibleSphere2.setCapability(Switch.ALLOW_SWITCH_READ);
+				visibleSphere2.setCapability(Switch.ALLOW_SWITCH_WRITE);
+				visibleSphere2.setCapability(Switch.ALLOW_CHILDREN_READ);
+				visibleSphere2.setCapability(Switch.ALLOW_CHILDREN_WRITE);
+				visibleSphere2.setWhichChild(Switch.CHILD_NONE);
+				tabSphere2[i][j][k]=visibleSphere2;
+				
+				if(i==0 && j==3 && k==0){
+					System.out.println(sphere);
+				}
 				TransformGroup tg = new TransformGroup();
 				transform = new Transform3D();
 				vector = new Vector3f(i * 0.4f-0.6f, k*0.25f,
@@ -208,6 +238,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 				transform.setTranslation(vector);
 				tg.setTransform(transform);
 				tg.addChild(visibleSphere);
+				tg.addChild(visibleSphere2);
 				sphereTG.addChild(tg);
 			}
 		}
@@ -231,7 +262,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	}
 
 	public void actionPerformed(ActionEvent e ) {
-		System.out.println("Test");
+		
 	}
 
 	@Override
@@ -250,22 +281,39 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 
 	       if (p != null) {
 	    	   if(p.getClass().getSimpleName().equals("Cylinder")){
-	    		   System.out.println(p.getClass().getSimpleName());
-	    		   System.out.println(cylinderList.indexOf(((Cylinder)p)));
-	    		   System.out.println("-----");
+	    		   int x=-1, y=-1;
+	    		   int i = 0;
+	    		   for(LinkedList<Cylinder> l : cylinderList){
+	    			   if(l.indexOf(((Cylinder)p)) != -1){
+	    				   x=i;
+	    				   y=l.indexOf(((Cylinder)p));
+	    			   }
+	    			   i++;
+	    		   }
+	    		   System.out.println("x: "+x+" y: "+y);
+
+	    		   int z = controler.placementOk(x, y);
+	    		   if(z!=-1){
+	    			   int idJoueur = controler.getIdJoueur();
+	    			   if(idJoueur==1){
+	    				   tabSphere1[x][y][z].setWhichChild(Switch.CHILD_ALL);
+	    			   } else {
+	    				   tabSphere2[x][y][z].setWhichChild(Switch.CHILD_ALL);
+	    			   }
+	    			   controler.placerPion(x, z, y);
+	    		   }
+	    		   //((Sphere)tabSphere[x][y][0].getChild(0)).getAppearance().getName();
+	    		   //((Sphere)tabSphere[x][y][0].getChild(0)).setAppearance(null);
+	    		   System.out.println(((Sphere)tabSphere1[x][y][0].getChild(0)));
 	    	   }
 
 	    	   if(p.getClass().getSimpleName().equals("Sphere")){
-	    		   //System.out.println("ici");
-	    		   //mapSS.get(((Sphere)p)).setWhichChild(Switch.CHILD_NONE);
-	    		   //System.out.println(mapSS.get(((Sphere)p)));
+	    		  
 	    	   }
-	          System.out.println(p.getClass().getSimpleName());
-	       } else if (s != null) {
-	    	   System.out.println(s.getClass().getSimpleName());
-	       } else{
-	          System.out.println("null");
 	       }
+	       /*else if (s != null) {
+	    	   System.out.println("s: "+s.getClass().getSimpleName());
+	       }*/
 
 	    }
 		
@@ -278,19 +326,16 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 }
