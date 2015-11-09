@@ -1,15 +1,12 @@
 package launcher;
 
 import java.awt.Dimension;
-import java.util.Observer;
 
 import javax.swing.JFrame;
 
 import controler.TicTacToeControler;
 import model.Plateau;
-import model.observable.TicTacToe;
 import vue.MainFrame;
-import vue.MenuGUI;
 
 public class LauncherGUI {
 	public static void main(String[] args) {

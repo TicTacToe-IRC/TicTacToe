@@ -5,11 +5,8 @@ import java.awt.Color;
 import java.io.File;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import controler.TicTacToeControler;
 
 public class Loading extends JPanel {
 	private Loading(){

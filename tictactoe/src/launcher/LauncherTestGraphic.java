@@ -5,10 +5,10 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
+import controler.TicTacToeControler;
 import model.Plateau;
 import model.observable.TicTacToe;
 import vue.JeuGUI;
-import controler.TicTacToeControler;
 
 public class LauncherTestGraphic {
 	public static void main(String[] args) {
