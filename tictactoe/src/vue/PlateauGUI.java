@@ -358,9 +358,9 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	    					   //JOptionPane.showConfirmDialog(this, "Test");
 	    					   String txtPopup =null;
 	    					   if(r==1){
-	    						   txtPopup=controler.getNomJoueur1()+" a remporté la partie !";
+	    						   txtPopup="Victoire de "+controler.getNomJoueur1()+" !";
 	    					   } else {
-	    						   txtPopup=controler.getNomJoueur2()+" a remporté la partie !";
+	    						   txtPopup="Victoire de "+controler.getNomJoueur2()+" !";
 	    					   }
 	    					   Popup jd = new Popup(parent,"Victoire",txtPopup,true);
 	    					   jd.showPopup();
@@ -382,6 +382,10 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	       }*/
 
 	    }
+		
+	}
+	
+	public void switchPanel(){
 		
 	}
 

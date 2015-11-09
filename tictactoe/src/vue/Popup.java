@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 public class Popup extends JDialog {
@@ -16,7 +18,7 @@ public class Popup extends JDialog {
 	public Popup(JFrame parent, String title, String txt, boolean modal){
 		super(parent, title, modal);
 		this.parent = parent;
-		this.setSize(200, 80);
+		this.setSize(200, 100);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 	    this.initComponent(txt);
@@ -24,18 +26,34 @@ public class Popup extends JDialog {
 	
 	private void initComponent(String txt){
 		JLabel jl = new JLabel(txt);
-		JButton b = new JButton("Ok");
-		b.addActionListener(new ActionListener() {
+		JButton brejouer = new JButton("Rejouer");
+		brejouer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				((MainFrame)parent).goTo("menu");
-				System.gc();
+				((MainFrame)parent).goTo("jeu");
 				closePopup();
 			}
 		});
+		JButton bmenu = new JButton("Menu");
+		bmenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((MainFrame)parent).goTo("menu");
+				closePopup();
+			}
+		});
+		
+		JPanel 	panelLabel = new JPanel();
+				panelLabel.setLayout(new BoxLayout(panelLabel, BoxLayout.PAGE_AXIS));
+		
+		JPanel 	panelBouton = new JPanel();
+				panelBouton.setLayout(new BoxLayout(panelBouton, BoxLayout.LINE_AXIS));
 
-		this.getContentPane().add(jl, BorderLayout.CENTER);
-		this.getContentPane().add(b, BorderLayout.SOUTH);
+		panelLabel.add(jl);
+		panelBouton.add(brejouer);
+		panelBouton.add(bmenu);
+		this.getContentPane().add(panelLabel, BorderLayout.CENTER);
+		this.getContentPane().add(panelBouton, BorderLayout.SOUTH);
 	}
 	
 	public void showPopup(){

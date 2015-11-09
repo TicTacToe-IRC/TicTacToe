@@ -1,8 +1,11 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 
 import javax.swing.BorderFactory;
@@ -18,6 +21,8 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	private TicTacToeControler controler;
 	private JFrame parent;
 	
+	JPanel 	panelJ1, panelJ2;
+	
 	public JeuGUI(JFrame jf, TicTacToeControler controler){
 		this.parent = jf;
 		this.controler = controler;
@@ -32,12 +37,18 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 				jp_east.setLayout(new BoxLayout(jp_east, BoxLayout.PAGE_AXIS));
 		
 		JButton boutonMenu = new JButton("Menu");
+				boutonMenu.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						((MainFrame) parent).goTo("menu");
+					}
+				});
 		JPanel 	panelMenu = new JPanel();
 				panelMenu.add(boutonMenu, BorderLayout.CENTER);
 				panelMenu.setPreferredSize(boutonMenu.getSize());
-		JPanel 	panelJ1 = new JPanel();
+		panelJ1 = new JPanel();
 				panelJ1.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur1()));
-		JPanel 	panelJ2 = new JPanel();
+		panelJ2 = new JPanel();
 				panelJ2.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur2()));
 				
 		JLabel devise1 = new JLabel(controler.getDeviseJoueur1());
