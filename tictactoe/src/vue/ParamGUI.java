@@ -244,6 +244,7 @@ public class ParamGUI extends JPanel {
 			controler.setCouleurJoueur2(couleurs.get(getIndexOfColor(colorList2.getSelectedItem())));
 			controler.setDeviseJoueur1(attaque1.getText());
 			controler.setDeviseJoueur2(attaque2.getText());
+			controler.initPlateau();
 			((MainFrame) parent).goTo("jeu");
 		}
 	}

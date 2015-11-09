@@ -58,9 +58,11 @@ public class PlateauGUI extends JPanel implements MouseListener {
 	private Switch[][][] tabSphere2;
 	private Canvas3D canvas3D;
 	private SimpleUniverse simpleU;
+	private JPanel jeuGui;
 
-public PlateauGUI(JFrame parent, TicTacToeControler controler) {
+public PlateauGUI(JFrame parent, JPanel jeuGui, TicTacToeControler controler) {
 	this.parent = parent;
+	this.jeuGui = jeuGui;
 	this.controler = controler;
  this.setLayout(new BorderLayout());
 
@@ -367,6 +369,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	    					   controler.initPlateau();
 	    				   }
 	    			   }
+	    			   switchPanel();
 	    		   }
 	    		   //((Sphere)tabSphere[x][y][0].getChild(0)).getAppearance().getName();
 	    		   //((Sphere)tabSphere[x][y][0].getChild(0)).setAppearance(null);
@@ -386,7 +389,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	}
 	
 	public void switchPanel(){
-		
+		((JeuGUI) jeuGui).switchPanel();
 	}
 
 	@Override
