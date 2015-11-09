@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +28,15 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.ViewPlatform;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.vecmath.Color4f;
+import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
+
+
+
 
 
 //Etape 2 :
@@ -49,7 +55,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import controler.TicTacToeControler;
 
-public class PlateauGUI extends JPanel implements MouseListener {
+public class PlateauGUI extends JPanel implements MouseListener, MouseMotionListener  {
 	TicTacToeControler controler;
 	JFrame parent;
 	
@@ -67,6 +73,10 @@ public class PlateauGUI extends JPanel implements MouseListener {
 	private int last_z;
 	private int last_id;
 	
+	Appearance appPlateau = new Appearance();
+	Appearance appBaton = new Appearance();
+	 Appearance appFond = new Appearance();
+	
 
 public PlateauGUI(JFrame parent, JPanel jeuGui, TicTacToeControler controler) {
 	this.parent = parent;
@@ -80,6 +90,7 @@ canvas3D =
      new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 
  canvas3D.addMouseListener(this);
+ canvas3D.addMouseMotionListener(this);
 
  this.add(canvas3D, BorderLayout.CENTER);
 
@@ -87,6 +98,14 @@ canvas3D =
  simpleU.getViewingPlatform().setNominalViewingTransform();
  BranchGroup scene = createSceneGraph(canvas3D);
  scene.compile();
+ 
+ ViewPlatform myPlatform = new ViewPlatform();
+	Transform3D tran = new Transform3D();
+	tran.set(new Vector3d((-13), (-3), (-33)));
+	TransformGroup g = new TransformGroup();
+	g.setTransform(tran);
+	g.addChild(myPlatform);
+	
  simpleU.addBranchGraph(scene);
 }
 
@@ -94,6 +113,8 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	 BranchGroup parent = new BranchGroup();
 	 pickCanvas = new PickCanvas(canvas, parent);
 	 pickCanvas.setMode(PickCanvas.BOUNDS);
+	 
+	 
 	
 	 // Creation du comportement de rotation une fois l'objet selectionne
 	 PickRotateBehavior pickRotate =
@@ -143,15 +164,13 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 			e.printStackTrace();
 		}
 	 
-	 Appearance appPlateau = new Appearance();
-	 Appearance appBaton = new Appearance();
+	 
 	 Appearance appBoule_j1 = new Appearance();
 	 			appBoule_j1.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 	 			appBoule_j1.setCapability(Appearance.ALLOW_TEXTURE_READ);
 	 Appearance appBoule_j2 = new Appearance();
 		 		appBoule_j2.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		 		appBoule_j2.setCapability(Appearance.ALLOW_TEXTURE_READ);
-	 Appearance appFond = new Appearance();
 	 
 	 Runtime runtime = Runtime.getRuntime();
 	   System.out.println(runtime.freeMemory()/(1024*1024));
@@ -215,18 +234,26 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	generalTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 	generalTG.setCapability(TransformGroup.ENABLE_PICK_REPORTING);
 	
+	Transform3D transformGeneral = new Transform3D();
+	Vector3f vectorGeneral = new Vector3f( 0.0f, 0.0f, -2.0f);
+	transformGeneral.setTranslation(vectorGeneral);
+	generalTG.setTransform(transformGeneral);
+	
 	 TransformGroup plateauTG = new TransformGroup();
 	 
 	 Float x_box = 0.6f;
 	 Float y_box = 0.025f;
-	 Float z_box = 0.6f;
+	 Float z_box = 0.6f;//0.6
 	 
 	 Transform3D transform = new Transform3D();
 	 Vector3f vector = new Vector3f( 0.0f, -0.45f, 0.0f);
+	 //Vector3f vector = new Vector3f( 0.0f, -0.45f, -4.0f);
 	 transform.setTranslation(vector);
 	 plateauTG.setTransform(transform);
 	 
-	 plateauTG.addChild(new Box(x_box, y_box, z_box, Box.GENERATE_TEXTURE_COORDS, appPlateau));
+	 Box boxPlateau = new Box(x_box, y_box, z_box, Box.GENERATE_TEXTURE_COORDS, appPlateau);
+	 boxPlateau.setPickable(false);
+	 plateauTG.addChild(boxPlateau);
 	 
 
 	 
@@ -309,12 +336,14 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	 parent.addChild(generalTG);  
 	 
 	 // Background
+	 Box boxBackground = new Box(15f, 15f, 0.1f, Box.GENERATE_TEXTURE_COORDS, appFond);
+	 boxBackground.setPickable(false);
 	 TransformGroup tg = new TransformGroup();
 	 transform = new Transform3D();
 	 vector = new Vector3f(0f, 0f, -20f);
 	 transform.setTranslation(vector);
 		tg.setTransform(transform);
-		tg.addChild(new Box(15f, 15f, 0.1f, Box.GENERATE_TEXTURE_COORDS, appFond));
+		tg.addChild(boxBackground);
 	 parent.addChild(tg);	
 	 
 	
@@ -467,5 +496,28 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		pickCanvas.setShapeLocation(e);
+	    PickResult result = pickCanvas.pickClosest();
+
+	    if (result != null) {
+	       Primitive p = (Primitive)result.getNode(PickResult.PRIMITIVE);
+	       Shape3D s = (Shape3D)result.getNode(PickResult.SHAPE3D);
+	       if (p != null) {
+	    	   if(p.getClass().getSimpleName().equals("Cylinder")){
+	    		   
+	    	   }
+	       }
+
+	    }
 	}
 }
