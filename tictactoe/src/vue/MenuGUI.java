@@ -40,8 +40,7 @@ public class MenuGUI extends JPanel{
 		File g = new File("");
 		 String path = g.getAbsolutePath();
 		try {
-            this.background = ImageIO.read(new File(path+"/images/Gris.jpg"));
-            repaint();
+            this.background = ImageIO.read(new File(path+"/images/background-menu.jpg"));
         } 
         catch (IOException e) {
             try {
