@@ -2,7 +2,6 @@ package controler;
 
 import model.Couleur;
 import model.Plateau;
-import model.observable.TicTacToe;
 
 public class TicTacToeControler {
 	private Plateau plateau;
