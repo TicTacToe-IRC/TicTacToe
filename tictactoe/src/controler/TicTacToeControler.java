@@ -1,5 +1,6 @@
 package controler;
 
+import vue.JeuGUI;
 import model.Couleur;
 import model.Plateau;
 
@@ -84,5 +85,9 @@ public class TicTacToeControler {
 	
 	public void initPlateau(){
 		plateau.init();
+	}
+	
+	public void switchJoueur(){
+		plateau.switchJoueur();
 	}
 }

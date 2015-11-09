@@ -39,9 +39,11 @@ import javax.vecmath.Vector3f;
 
 
 
+
 //Etape 2 :
 //Importation des packages Java 3D
 import com.sun.j3d.utils.geometry.Box;
+import com.sun.j3d.utils.geometry.Cone;
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Sphere;
@@ -61,6 +63,8 @@ public class PlateauGUI extends JPanel implements MouseListener, MouseMotionList
 	
 	private PickCanvas pickCanvas;
 	private LinkedList<LinkedList> cylinderList;
+	private LinkedList<LinkedList> coneList1;
+	private LinkedList<LinkedList> coneList2;
 	private Map<Sphere,Switch> mapSS;
 	private Switch[][][] tabSphere1;
 	private Switch[][][] tabSphere2;
@@ -258,9 +262,13 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 
 	 
 	 cylinderList = new LinkedList<LinkedList>();
+	 coneList1 = new LinkedList<LinkedList>();
+	 coneList2 = new LinkedList<LinkedList>();
 	 
 	 for(int i=0; i<4; i++){
 		 LinkedList<Cylinder> list = new LinkedList<Cylinder>();
+		 LinkedList<Switch> list21 = new LinkedList<Switch>();
+		 LinkedList<Switch> list22 = new LinkedList<Switch>();
 		 for(int j=0; j<4; j++){
 			 Cylinder baton = new Cylinder(0.05f,1.2f, Cylinder.GENERATE_TEXTURE_COORDS,appBaton);
 			 list.add(baton);
@@ -274,8 +282,42 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		      tg.setTransform(transform);
 		      tg.addChild(baton);
 		      plateauTG.addChild(tg);
+		      
+		      Cone cone1 = new Cone(0.05f,-0.05f, Cone.GENERATE_TEXTURE_COORDS,appBoule_j1);
+		      Switch visibleCone1 = new Switch();
+		      visibleCone1.addChild(cone1);
+		      visibleCone1.setCapability(Switch.ALLOW_SWITCH_READ);
+		      visibleCone1.setCapability(Switch.ALLOW_SWITCH_WRITE);
+		      visibleCone1.setCapability(Switch.ALLOW_CHILDREN_READ);
+		      visibleCone1.setCapability(Switch.ALLOW_CHILDREN_WRITE);
+		      visibleCone1.setWhichChild(Switch.CHILD_NONE);
+		      
+		      Cone cone2 = new Cone(0.05f,-0.05f, Cone.GENERATE_TEXTURE_COORDS,appBoule_j2);
+		      Switch visibleCone2 = new Switch();
+		      visibleCone2.addChild(cone2);
+		      visibleCone2.setCapability(Switch.ALLOW_SWITCH_READ);
+		      visibleCone2.setCapability(Switch.ALLOW_SWITCH_WRITE);
+		      visibleCone2.setCapability(Switch.ALLOW_CHILDREN_READ);
+		      visibleCone2.setCapability(Switch.ALLOW_CHILDREN_WRITE);
+		      visibleCone2.setWhichChild(Switch.CHILD_NONE);
+		      
+		      list21.add(visibleCone1);
+		      list22.add(visibleCone2);
+		      TransformGroup tg2 = new TransformGroup();
+			  transform = new Transform3D();
+			  Float x_cone = x_cyl;
+		 	  Float y_cone = 1.25f;
+		 	  Float z_cone = z_cyl;
+		      vector = new Vector3f( x_cone, y_cone, z_cone);
+		      transform.setTranslation(vector);
+		      tg2.setTransform(transform);
+		      tg2.addChild(visibleCone1);
+		      tg2.addChild(visibleCone2);
+		      plateauTG.addChild(tg2);
 		 }
 		 cylinderList.add(list);
+		 coneList1.add(list21);
+		 coneList2.add(list22);
 	 }
 	 
 	 
@@ -396,6 +438,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    				   tabSphere2[x][y][z].setWhichChild(Switch.CHILD_ALL);
 		    			   }
 		    			   controler.placerPion(x, z, y);
+		    			   
 		    			   if(!controler.isAnnonce()){
 		    				   int r = controler.partieFinie(x, z, y, idJoueur);
 		    				   if(r!=0){
@@ -413,7 +456,9 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    					   jd.showPopup();
 		    					   controler.initPlateau();
 		    				   }
+		    				   controler.switchJoueur();
 			    			   switchPanel();
+			    			   hideCone();
 		    			   } else {
 		    				   setMonTour(false);
 		    				   pionPoser();
@@ -442,6 +487,19 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    }
 		}
 		
+	}
+	
+	public void hideCone(){
+		for(LinkedList<Switch> cl : coneList1){
+			for(Switch scl : cl){
+				scl.setWhichChild(Switch.CHILD_NONE);
+			}
+		}
+		for(LinkedList<Switch> cl : coneList2){
+			for(Switch scl : cl){
+				scl.setWhichChild(Switch.CHILD_NONE);
+			}
+		}
 	}
 	
 	public void switchPanel(){
@@ -514,7 +572,64 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	       Shape3D s = (Shape3D)result.getNode(PickResult.SHAPE3D);
 	       if (p != null) {
 	    	   if(p.getClass().getSimpleName().equals("Cylinder")){
-	    		   
+	    		   int x=-1, y=-1;
+	    		   int i = 0;
+	    		   for(LinkedList<Cylinder> l : cylinderList){
+	    			   if(l.indexOf(((Cylinder)p)) != -1){
+	    				   x=i;
+	    				   y=l.indexOf(((Cylinder)p));
+	    			   }
+	    			   i++;
+	    		   }
+
+	    		   if(controler.getIdJoueur()==1){
+		    		   for(LinkedList<Switch> cl : coneList1){
+		    			   for(Switch scl : cl){
+		    				   if(x==coneList1.indexOf(cl) && y==cl.indexOf(scl)){
+		    					   if(scl.getWhichChild() == Switch.CHILD_NONE){
+		    						   System.out.println("test");
+		    						   scl.setWhichChild(Switch.CHILD_ALL);
+		    					   }
+		    						   
+		    				   } else {
+		    					   if(scl.getWhichChild() == Switch.CHILD_ALL){
+		    						   System.out.println("OUI");
+		    						   scl.setWhichChild(Switch.CHILD_NONE);
+		    					   }
+		    				   }
+			    		   }
+		    		   }
+		    		   for(LinkedList<Switch> cl : coneList2){
+		    			   for(Switch scl : cl){
+		    				   scl.setWhichChild(Switch.CHILD_NONE);
+			    		   }
+		    		   }
+	    		   } else {
+	    			   for(LinkedList<Switch> cl : coneList1){
+		    			   for(Switch scl : cl){
+		    				   scl.setWhichChild(Switch.CHILD_NONE);
+			    		   }
+		    		   }
+	    			   for(LinkedList<Switch> cl : coneList2){
+		    			   for(Switch scl : cl){
+		    				   if(x==coneList2.indexOf(cl) && y==cl.indexOf(scl)){
+		    					   if(scl.getWhichChild() == Switch.CHILD_NONE){
+		    						   System.out.println("test");
+		    						   scl.setWhichChild(Switch.CHILD_ALL);
+		    					   }
+		    						   
+		    				   } else {
+		    					   if(scl.getWhichChild() == Switch.CHILD_ALL){
+		    						   System.out.println("OUI");
+		    						   scl.setWhichChild(Switch.CHILD_NONE);
+		    					   }
+		    				   }
+			    		   }
+		    		   }
+	    		   }
+	    		   /*if(x!=-1 && y!=-1){
+	    			   ((Switch)coneList.get(x).get(y)).setWhichChild(Switch.CHILD_ALL);
+	    		   }*/
 	    	   }
 	       }
 

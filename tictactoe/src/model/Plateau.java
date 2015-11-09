@@ -49,7 +49,7 @@ public class Plateau {
 
 	public void placerPion(int x, int y, int z){
 		plateauJeu[x][y][z] = joueurCourant.getId();
-		switchJoueur();
+		//switchJoueur();
 	}
 
 	public int placementHauteur(int x, int z){

@@ -192,7 +192,9 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	
 	public class FinTour implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
+			controler.switchJoueur();
 			switchPanel();
+			pgui.hideCone();
 			setMonTour(true);
 		}
 	}
