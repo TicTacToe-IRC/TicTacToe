@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import controler.TicTacToeControler;
 import model.Plateau;
 import model.observable.TicTacToe;
-import vue.FcardLayout;
+import vue.MainFrame;
 import vue.MenuGUI;
 
 public class LauncherGUI {
@@ -24,7 +24,9 @@ public class LauncherGUI {
 	//	ticTacToe = new TicTacToe();	
 		ticTacToeControler = new TicTacToeControler(plateau);
 		
-		frame = new FcardLayout("Tic Tac Toe 3D", ticTacToeControler,  dim);
+		frame = new MainFrame("Tic Tac Toe 3D",dim,ticTacToeControler);
+		//frame.setPreferredSize(dim);
+		//frame.getContentPane().add(new MenuGUI("Tic Tac Toe 3D", ticTacToeControler,  dim));
 	//	ticTacToe.addObserver((Observer) frame);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -3,6 +3,7 @@ package model;
 public class Joueur {
 	private String nom;
 	private Couleur couleur;
+	private String devise;
 	private int id;
 	
 	public Joueur(String nom, Couleur couleur, int id) {
@@ -30,6 +31,14 @@ public class Joueur {
 
 	public void setCouleur(Couleur couleur) {
 		this.couleur = couleur;
+	}
+
+	public String getDevise() {
+		return devise;
+	}
+
+	public void setDevise(String s) {
+		this.devise = s;
 	}
 
 	@Override

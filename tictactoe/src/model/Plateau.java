@@ -7,10 +7,10 @@ public class Plateau {
 	private int hauteur;
 	private int[][][] plateauJeu;
 	private Joueur joueurCourant;
-	private String Joueur1 = "Joueur1";
 	private Couleur couleur;
-	private Joueur joueur1 = new Joueur(Joueur1, couleur, 1);
-	private Joueur joueur2 = new Joueur(Joueur1, couleur, 2);
+	private Joueur joueur1 = new Joueur("Joueur1", couleur, 1);
+	private Joueur joueur2 = new Joueur("Joueur2", couleur, 2);
+	private boolean annonce = false;
 
 
 	public Plateau(int l, int c, int h) {
@@ -100,7 +100,7 @@ public class Plateau {
 			zT = 0;
 			while (full && zT<4) {
 				if (plateauJeu[xT][3][zT] == 0) {
-					System.out.println(xT + " " + zT);
+					//System.out.println(xT + " " + zT);
 					full = false;
 				}
 				zT++;
@@ -178,5 +178,49 @@ public class Plateau {
 	
 	public String getNomJoueur2() {
 		return joueur2.getNom();
+	}
+	
+	public void setNomJoueur1(String s) {
+		joueur1.setNom(s);
+	}
+	
+	public void setNomJoueur2(String s) {
+		joueur2.setNom(s);
+	}
+	
+	public Couleur getCouleurJoueur1() {
+		return joueur1.getCouleur();
+	}
+	
+	public Couleur getCouleurJoueur2() {
+		return joueur2.getCouleur();
+	}
+	
+	public void setCouleurJoueur1(Couleur c) {
+		joueur1.setCouleur(c);
+	}
+	
+	public void setCouleurJoueur2(Couleur c) {
+		joueur2.setCouleur(c);
+	}
+	
+	public String getDeviseJoueur1() {
+		return joueur1.getDevise();
+	}
+	
+	public String getDeviseJoueur2() {
+		return joueur2.getDevise();
+	}
+	
+	public void setDeviseJoueur1(String s) {
+		joueur1.setDevise(s);
+	}
+	
+	public void setDeviseJoueur2(String s) {
+		joueur2.setDevise(s);
+	}
+
+	public boolean isAnnonce() {
+		return annonce;
 	}
 }

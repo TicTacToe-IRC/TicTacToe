@@ -1,5 +1,6 @@
 package controler;
 
+import model.Couleur;
 import model.Plateau;
 import model.observable.TicTacToe;
 
@@ -28,5 +29,53 @@ public class TicTacToeControler {
 	
 	public String getNomJoueur2() {
 		return plateau.getNomJoueur2();
+	}
+	
+	public void setNomJoueur1(String s) {
+		plateau.setNomJoueur1(s);
+	}
+	
+	public void setNomJoueur2(String s) {
+		plateau.setNomJoueur2(s);
+	}
+	
+	public Couleur getCouleurJoueur1() {
+		return plateau.getCouleurJoueur1();
+	}
+	
+	public Couleur getCouleurJoueur2() {
+		return plateau.getCouleurJoueur2();
+	}
+	
+	public void setCouleurJoueur1(Couleur c) {
+		plateau.setCouleurJoueur1(c);
+	}
+	
+	public void setCouleurJoueur2(Couleur c) {
+		plateau.setCouleurJoueur2(c);
+	}
+	
+	public String getDeviseJoueur1() {
+		return plateau.getDeviseJoueur1();
+	}
+	
+	public String getDeviseJoueur2() {
+		return plateau.getDeviseJoueur2();
+	}
+	
+	public void setDeviseJoueur1(String s) {
+		plateau.setDeviseJoueur1(s);
+	}
+	
+	public void setDeviseJoueur2(String s) {
+		plateau.setDeviseJoueur2(s);
+	}
+
+	public boolean isAnnonce() {
+		return plateau.isAnnonce();
+	}
+	
+	public int partieFinie(int x, int y, int z, int idJoueur){
+		return plateau.partieFinie(x, y, z, idJoueur);
 	}
 }

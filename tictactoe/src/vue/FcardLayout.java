@@ -23,7 +23,7 @@ public class FcardLayout extends JFrame {
   JPanel p2 = new ParamGUI(this);
 
   public FcardLayout(String title, TicTacToeControler controler, Dimension dim) {
-	  try {
+	  /*try {
 		  for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
 		            UIManager.setLookAndFeel(info.getClassName());
@@ -34,7 +34,7 @@ public class FcardLayout extends JFrame {
 			| IllegalAccessException | UnsupportedLookAndFeelException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	}*/
 	 this.controler = controler;
      this.setLayout(new FlowLayout());
      this.setTitle(title);

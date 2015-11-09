@@ -24,12 +24,12 @@ import com.sun.j3d.utils.applet.MainFrame;
 import launcher.LauncherGUI;
 import controler.TicTacToeControler;
 
-public class JeuGUI extends JFrame implements java.util.Observer{
+public class JeuGUI extends JPanel implements java.util.Observer{
 	private TicTacToeControler controler;
+	private JFrame parent;
 	
-	public JeuGUI(java.lang.String name, TicTacToeControler controler, java.awt.Dimension boardSize){
-		super(name);
-		this.setSize(boardSize);
+	public JeuGUI(JFrame jf, TicTacToeControler controler){
+		this.parent = jf;
 		this.controler = controler;
 		init();
 	}
@@ -41,16 +41,29 @@ public class JeuGUI extends JFrame implements java.util.Observer{
 				jp_east.setPreferredSize(new Dimension(200,400));
 				jp_east.setLayout(new BoxLayout(jp_east, BoxLayout.PAGE_AXIS));
 		
+		JButton boutonMenu = new JButton("Menu");
+		JPanel 	panelMenu = new JPanel();
+				panelMenu.add(boutonMenu, BorderLayout.CENTER);
+				panelMenu.setPreferredSize(boutonMenu.getSize());
 		JPanel 	panelJ1 = new JPanel();
 				panelJ1.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur1()));
 		JPanel 	panelJ2 = new JPanel();
 				panelJ2.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur2()));
+				
+		JLabel devise1 = new JLabel(controler.getDeviseJoueur1());
+		JLabel devise2 = new JLabel(controler.getDeviseJoueur2());
+				
+				
+		panelJ1.add(devise1, BorderLayout.SOUTH);
+		panelJ2.add(devise2, BorderLayout.SOUTH);
+			
+		jp_east.add(boutonMenu);
 		jp_east.add(panelJ1);
 		jp_east.add(panelJ2);
 		
 		this.setLayout(new BorderLayout());
-		this.getContentPane().add(new PlateauGUI(controler),BorderLayout.CENTER);
-		this.getContentPane().add(jp_east,BorderLayout.EAST);
+		this.add(new PlateauGUI(parent, controler),BorderLayout.CENTER);
+		this.add(jp_east,BorderLayout.EAST);
 	}
 
 	@Override
