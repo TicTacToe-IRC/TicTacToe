@@ -20,6 +20,10 @@ public class Plateau {
 		hauteur = h;
 		plateauJeu = new int[l][c][h];
 
+		init();
+	}
+	
+	public void init() {
 		for(int i=0; i< plateauJeu.length; i++){
 			for(int j=0; j< plateauJeu.length; j++)
 				for(int k=0; k< plateauJeu.length; k++)

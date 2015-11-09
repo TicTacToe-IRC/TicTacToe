@@ -77,4 +77,8 @@ public class TicTacToeControler {
 	public int partieFinie(int x, int y, int z, int idJoueur){
 		return plateau.partieFinie(x, y, z, idJoueur);
 	}
+	
+	public void initPlateau(){
+		plateau.init();
+	}
 }

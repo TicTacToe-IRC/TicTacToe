@@ -142,31 +142,44 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		 		appBoule_j2.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		 		appBoule_j2.setCapability(Appearance.ALLOW_TEXTURE_READ);
 	 Appearance appFond = new Appearance();
+	 
+	 Runtime runtime = Runtime.getRuntime();
+	   System.out.println(runtime.freeMemory()/(1024*1024));
 	
 	 Texture texture_bois1 = new TextureLoader(image_bois1).getTexture();
 			 texture_bois1.setBoundaryModeS(Texture.WRAP);
 			 texture_bois1.setBoundaryModeT(Texture.WRAP);
 			 texture_bois1.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+			 
+			 System.out.println(runtime.freeMemory()/(1024*1024));
 	 
 	 Texture texture_bois2 = new TextureLoader(image_bois2).getTexture();
 			 texture_bois2.setBoundaryModeS(Texture.WRAP);
 			 texture_bois2.setBoundaryModeT(Texture.WRAP);
 			 texture_bois2.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 			 
+			 System.out.println(runtime.freeMemory()/(1024*1024));
+			 
 	Texture texture_bois3 = new TextureLoader(image_bois3).getTexture();
 			texture_bois3.setBoundaryModeS(Texture.WRAP);
 			texture_bois3.setBoundaryModeT(Texture.WRAP);
 			texture_bois3.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+			
+			System.out.println(runtime.freeMemory()/(1024*1024));
 			 
 	Texture texture_j1 = new TextureLoader(image_joueur1).getTexture();
 			texture_j1.setBoundaryModeS(Texture.WRAP);
 			texture_j1.setBoundaryModeT(Texture.WRAP);
 			texture_j1.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+			
+			System.out.println(runtime.freeMemory()/(1024*1024));
 			 
 	Texture texture_j2 = new TextureLoader(image_joueur2).getTexture();
 			texture_j2.setBoundaryModeS(Texture.WRAP);
 			texture_j2.setBoundaryModeT(Texture.WRAP);
 			texture_j2.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+			
+			System.out.println(runtime.freeMemory()/(1024*1024));
 	
 	TextureAttributes texAttr = new TextureAttributes();
 	texAttr.setTextureMode(TextureAttributes.MODULATE);
@@ -351,11 +364,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	    					   }
 	    					   Popup jd = new Popup(parent,"Victoire",txtPopup,true);
 	    					   jd.showPopup();
-	    					   canvas3D.getView().removeAllCanvas3Ds();
-	    					   simpleU.cleanup();
-	    					   simpleU.removeAllLocales();
-	    					   //locale.removeBranchGraph(traffic);	// ??? useful
-	    					   //locale.getVirtualUniverse().removeAllLocales();
+	    					   controler.initPlateau();
 	    				   }
 	    			   }
 	    		   }
