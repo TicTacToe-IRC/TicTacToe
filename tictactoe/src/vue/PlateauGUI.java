@@ -51,6 +51,8 @@ public class PlateauGUI extends JPanel implements MouseListener {
 	private Map<Sphere,Switch> mapSS;
 	private Switch[][][] tabSphere1;
 	private Switch[][][] tabSphere2;
+	private Canvas3D canvas3D;
+	private SimpleUniverse simpleU;
 
 public PlateauGUI(JFrame parent, TicTacToeControler controler) {
 	this.parent = parent;
@@ -59,14 +61,14 @@ public PlateauGUI(JFrame parent, TicTacToeControler controler) {
 
  // Etape 3 :
  // Creation du Canvas 3D
- Canvas3D canvas3D =
+canvas3D =
      new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 
  canvas3D.addMouseListener(this);
 
  this.add(canvas3D, BorderLayout.CENTER);
 
- SimpleUniverse simpleU = new SimpleUniverse(canvas3D);
+ simpleU = new SimpleUniverse(canvas3D);
  simpleU.getViewingPlatform().setNominalViewingTransform();
  BranchGroup scene = createSceneGraph(canvas3D);
  scene.compile();
@@ -344,6 +346,11 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	    					   }
 	    					   Popup jd = new Popup(parent,"Victoire",txtPopup,true);
 	    					   jd.showPopup();
+	    					   canvas3D.getView().removeAllCanvas3Ds();
+	    					   simpleU.cleanup();
+	    					   simpleU.removeAllLocales();
+	    					   //locale.removeBranchGraph(traffic);	// ??? useful
+	    					   //locale.getVirtualUniverse().removeAllLocales();
 	    				   }
 	    			   }
 	    		   }
