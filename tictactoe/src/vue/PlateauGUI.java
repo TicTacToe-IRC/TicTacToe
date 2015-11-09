@@ -59,6 +59,7 @@ public class PlateauGUI extends JPanel implements MouseListener {
 	private Canvas3D canvas3D;
 	private SimpleUniverse simpleU;
 	private JPanel jeuGui;
+	
 
 public PlateauGUI(JFrame parent, JPanel jeuGui, TicTacToeControler controler) {
 	this.parent = parent;

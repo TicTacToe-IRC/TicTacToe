@@ -30,6 +30,7 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		init();
 	}
 	
+	
 	public void init(){
 		setLayout(new FlowLayout(0 , 250, 250));
 
