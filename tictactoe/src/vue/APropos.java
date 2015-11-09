@@ -40,7 +40,7 @@ public class APropos extends JPanel {
 		File g = new File("");
 		String path = g.getAbsolutePath();
 		try {
-            this.background = ImageIO.read(new File(path+"/images/APropos.jpg"));
+            this.background = ImageIO.read(new File(path+"/images/Apropos.jpg"));
             repaint();
         } 
         catch (IOException e) {
