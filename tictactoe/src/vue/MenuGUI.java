@@ -88,7 +88,7 @@ public class MenuGUI extends JPanel{
 	
 	public class Propos implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
-			System.exit(0);
+			((MainFrame) parent).goTo("propos");
 		}
 	}
 	
