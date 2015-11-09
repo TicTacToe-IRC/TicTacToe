@@ -32,6 +32,7 @@ public class ParamGUI extends JPanel {
 	private int lastPosition1, lastPosition2;
 	private JPanel couleur1 = new JPanel(), couleur2 = new JPanel();
 	private JTextField attaque1 = new JTextField(), attaque2 = new JTextField();
+	JCheckBox 	gagner;
 	
 	private JFrame parent;
 	private TicTacToeControler controler;
@@ -152,7 +153,7 @@ public class ParamGUI extends JPanel {
 		
 		/* Victoire */
 		
-		JCheckBox 	gagner = new JCheckBox ("Option : \"J'ai gagné\"");
+		gagner = new JCheckBox ("Option : \"J'ai gagné\"");
 					//gagner.setPreferredSize(new Dimension(200, 30));
 					gagner.addActionListener(new Gagner());
 					gagner.setToolTipText("Si coché, les joueurs devront annoncer qu'ils ont gagné pour gagner.");
@@ -244,6 +245,7 @@ public class ParamGUI extends JPanel {
 			controler.setCouleurJoueur2(couleurs.get(getIndexOfColor(colorList2.getSelectedItem())));
 			controler.setDeviseJoueur1(attaque1.getText());
 			controler.setDeviseJoueur2(attaque2.getText());
+			controler.setAnnonce(gagner.isSelected());
 			controler.initPlateau();
 			((MainFrame) parent).goTo("jeu");
 		}

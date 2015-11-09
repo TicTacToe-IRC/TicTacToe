@@ -227,4 +227,8 @@ public class Plateau {
 	public boolean isAnnonce() {
 		return annonce;
 	}
+	
+	public void setAnnonce(boolean b) {
+		annonce = b;
+	}
 }

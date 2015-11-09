@@ -74,6 +74,10 @@ public class TicTacToeControler {
 		return plateau.isAnnonce();
 	}
 	
+	public void setAnnonce(boolean b) {
+		plateau.setAnnonce(b);
+	}
+	
 	public int partieFinie(int x, int y, int z, int idJoueur){
 		return plateau.partieFinie(x, y, z, idJoueur);
 	}

@@ -21,8 +21,16 @@ import controler.TicTacToeControler;
 public class JeuGUI extends JPanel implements java.util.Observer{
 	private TicTacToeControler controler;
 	private JFrame parent;
+	private boolean monTour = true;
 	
 	JPanel 	panelJ1, panelJ2;
+	
+	JButton bFinTour1 = new JButton("Fin du tour");
+	JButton bGagner1 = new JButton("J'ai gagné");
+	JButton bFinTour2 = new JButton("Fin du tour");
+	JButton bGagner2 = new JButton("J'ai gagné");
+	
+	private PlateauGUI pgui;
 	
 	public JeuGUI(JFrame jf, TicTacToeControler controler){
 		this.parent = jf;
@@ -71,6 +79,10 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		couleurJ2 = new JPanel();
 		couleurJ2.setBackground(new Color(cj2.getR(),cj2.getG(),cj2.getB()));
 		couleurJ2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		bFinTour1.setEnabled(false);
+		bGagner1.setEnabled(false);
+		bFinTour2.setEnabled(false);
+		bGagner2.setEnabled(false);
 		
 		JLabel lcolor1 = new JLabel(cj1.getNom()+"  ");
 		lcolor1.setBackground(null);
@@ -87,10 +99,10 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		pcolor2.add(couleurJ2);
 		
 
-		JButton bFinTour1 = new JButton("Fin du tour");
-		JButton bGagner1 = new JButton("J'ai gagné");
-		JButton bFinTour2 = new JButton("Fin du tour");
-		JButton bGagner2 = new JButton("J'ai gagné");
+		bFinTour1.addActionListener(new FinTour());
+		bGagner1.addActionListener(new Gagner());
+		bFinTour2.addActionListener(new FinTour());
+		bGagner2.addActionListener(new Gagner());
 		
 		JPanel panelAnnonce1 = new JPanel();
 		panelAnnonce1.setBackground(null);
@@ -107,8 +119,10 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		panelJ1.add(pcolor1, BorderLayout.NORTH);
 		panelJ2.add(pcolor2, BorderLayout.NORTH);	
 		
-		panelJ1.add(panelAnnonce1, BorderLayout.CENTER);
-		panelJ2.add(panelAnnonce2, BorderLayout.CENTER);	
+		if(controler.isAnnonce()){
+			panelJ1.add(panelAnnonce1, BorderLayout.CENTER);
+			panelJ2.add(panelAnnonce2, BorderLayout.CENTER);	
+		}
 		
 		panelJ1.add(devise1, BorderLayout.SOUTH);
 		panelJ2.add(devise2, BorderLayout.SOUTH);
@@ -118,7 +132,8 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		jp_east.add(panelJ2);
 		
 		this.setLayout(new BorderLayout());
-		this.add(new PlateauGUI(parent, this, controler),BorderLayout.CENTER);
+		pgui = new PlateauGUI(parent, this, controler);
+		this.add(pgui,BorderLayout.CENTER);
 		this.add(jp_east,BorderLayout.EAST);
 	}
 	
@@ -129,6 +144,10 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 			panelJ1.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur1()));
 			panelJ2.setBackground(Color.WHITE);
 			panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur2() ));
+				bFinTour1.setEnabled(false);
+				bGagner1.setEnabled(false);
+				bFinTour2.setEnabled(false);
+				bGagner2.setEnabled(false);
 			panelJ1.repaint();
 			panelJ1.revalidate();
 			panelJ2.repaint();
@@ -138,10 +157,67 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 			panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur1() ));
 			panelJ2.setBackground(null);
 			panelJ2.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur2()));
+				bFinTour1.setEnabled(false);
+				bGagner1.setEnabled(false);
+				bFinTour2.setEnabled(false);
+				bGagner2.setEnabled(false);
 			panelJ1.repaint();
 			panelJ1.revalidate();
 			panelJ2.repaint();
 			panelJ2.revalidate();
+		}
+	}
+	
+	public boolean isMonTour(){
+		return monTour;
+	}
+	
+	public void setMonTour(boolean b){
+		monTour = b;
+	}
+	
+	public void pionPoser(){
+		if(panelJ1.getBackground().equals(Color.WHITE)){
+			bFinTour1.setEnabled(true);
+			bGagner1.setEnabled(true);
+			bFinTour2.setEnabled(false);
+			bGagner2.setEnabled(false);
+		} else {
+			bFinTour1.setEnabled(false);
+			bGagner1.setEnabled(false);
+			bFinTour2.setEnabled(true);
+			bGagner2.setEnabled(true);
+		}
+	}
+	
+	public class FinTour implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			switchPanel();
+			setMonTour(true);
+		}
+	}
+	
+	public class Gagner implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			int r = controler.partieFinie(pgui.getLast_x(), pgui.getLast_z(), pgui.getLast_y(), pgui.getLast_id());
+			System.out.println(r+" - "+pgui.getLast_x()+" - "+pgui.getLast_z()+" - "+pgui.getLast_y()+" - "+pgui.getLast_id());
+			String txtPopup =null;
+		   if(r==pgui.getLast_id()){
+			   if(r==1){
+				   txtPopup="Victoire de "+controler.getNomJoueur1()+" !";
+			   } else {
+				   txtPopup="Victoire de "+controler.getNomJoueur2()+" !";
+			   }
+		   } else {
+			   if(pgui.getLast_id()==1){
+				   txtPopup="<html>Victoire de "+controler.getNomJoueur2()+" !<br/>Mauvaise annonce de "+controler.getNomJoueur1()+"...</html>";
+			   } else {
+				   txtPopup="<html>Victoire de "+controler.getNomJoueur1()+" !<br/>Mauvaise annonce de "+controler.getNomJoueur2()+"...</html>";
+			   }
+		   }
+		   Popup jd = new Popup(parent,"Partie finie",txtPopup,true);
+		   jd.showPopup();
+		   controler.initPlateau();
 		}
 	}
 

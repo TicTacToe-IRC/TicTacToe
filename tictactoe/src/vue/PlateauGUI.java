@@ -5,6 +5,7 @@ package vue;
 //Etape 1 :
 //Importation des packages Java 2
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,6 +31,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.vecmath.Color4f;
 import javax.vecmath.Vector3f;
+
 
 //Etape 2 :
 //Importation des packages Java 3D
@@ -59,6 +61,11 @@ public class PlateauGUI extends JPanel implements MouseListener {
 	private Canvas3D canvas3D;
 	private SimpleUniverse simpleU;
 	private JPanel jeuGui;
+	
+	private int last_x;
+	private int last_y;
+	private int last_z;
+	private int last_id;
 	
 
 public PlateauGUI(JFrame parent, JPanel jeuGui, TicTacToeControler controler) {
@@ -320,77 +327,126 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		pickCanvas.setShapeLocation(e);
-	    PickResult result = pickCanvas.pickClosest();
+		if(isMonTour()){
+			pickCanvas.setShapeLocation(e);
+		    PickResult result = pickCanvas.pickClosest();
+	
+		    if (result == null) {
+	
+		       System.out.println("Nothing picked");
+	
+		    } else {
+	
+		       Primitive p = (Primitive)result.getNode(PickResult.PRIMITIVE);
+		       Shape3D s = (Shape3D)result.getNode(PickResult.SHAPE3D);
+	
+		       if (p != null) {
+		    	   if(p.getClass().getSimpleName().equals("Cylinder")){
+		    		   int x=-1, y=-1;
+		    		   int i = 0;
+		    		   for(LinkedList<Cylinder> l : cylinderList){
+		    			   if(l.indexOf(((Cylinder)p)) != -1){
+		    				   x=i;
+		    				   y=l.indexOf(((Cylinder)p));
+		    			   }
+		    			   i++;
+		    		   }
+		    		   //System.out.println("x: "+x+" y: "+y);
+	
+		    		   int z = controler.placementOk(x, y);
+		    		   int idJoueur = controler.getIdJoueur();
+		    		   if(z!=-1){
 
-	    if (result == null) {
-
-	       System.out.println("Nothing picked");
-
-	    } else {
-
-	       Primitive p = (Primitive)result.getNode(PickResult.PRIMITIVE);
-	       Shape3D s = (Shape3D)result.getNode(PickResult.SHAPE3D);
-
-	       if (p != null) {
-	    	   if(p.getClass().getSimpleName().equals("Cylinder")){
-	    		   int x=-1, y=-1;
-	    		   int i = 0;
-	    		   for(LinkedList<Cylinder> l : cylinderList){
-	    			   if(l.indexOf(((Cylinder)p)) != -1){
-	    				   x=i;
-	    				   y=l.indexOf(((Cylinder)p));
-	    			   }
-	    			   i++;
-	    		   }
-	    		   //System.out.println("x: "+x+" y: "+y);
-
-	    		   int z = controler.placementOk(x, y);
-	    		   if(z!=-1){
-	    			   int idJoueur = controler.getIdJoueur();
-	    			   if(idJoueur==1){
-	    				   tabSphere1[x][y][z].setWhichChild(Switch.CHILD_ALL);
-	    			   } else {
-	    				   tabSphere2[x][y][z].setWhichChild(Switch.CHILD_ALL);
-	    			   }
-	    			   controler.placerPion(x, z, y);
-	    			   if(!controler.isAnnonce()){
-	    				   int r = controler.partieFinie(x, z, y, idJoueur);
-	    				   if(r!=0){
-	    					   System.out.println("Gagnant: "+r);
-	    					   //JOptionPane.showConfirmDialog(this, "Test");
-	    					   String txtPopup =null;
-	    					   if(r==1){
-	    						   txtPopup="Victoire de "+controler.getNomJoueur1()+" !";
-	    					   } else {
-	    						   txtPopup="Victoire de "+controler.getNomJoueur2()+" !";
-	    					   }
-	    					   Popup jd = new Popup(parent,"Victoire",txtPopup,true);
-	    					   jd.showPopup();
-	    					   controler.initPlateau();
-	    				   }
-	    			   }
-	    			   switchPanel();
-	    		   }
-	    		   //((Sphere)tabSphere[x][y][0].getChild(0)).getAppearance().getName();
-	    		   //((Sphere)tabSphere[x][y][0].getChild(0)).setAppearance(null);
-	    		   //System.out.println(((Sphere)tabSphere1[x][y][0].getChild(0)));
-	    	   }
-
-	    	   if(p.getClass().getSimpleName().equals("Sphere")){
-	    		  
-	    	   }
-	       }
-	       /*else if (s != null) {
-	    	   System.out.println("s: "+s.getClass().getSimpleName());
-	       }*/
-
-	    }
+			    		   last_x = x;
+			    		   last_y = y;
+			    		   last_z = z;
+			    		   last_id = idJoueur;
+		    			   if(idJoueur==1){
+		    				   tabSphere1[x][y][z].setWhichChild(Switch.CHILD_ALL);
+		    			   } else {
+		    				   tabSphere2[x][y][z].setWhichChild(Switch.CHILD_ALL);
+		    			   }
+		    			   controler.placerPion(x, z, y);
+		    			   if(!controler.isAnnonce()){
+		    				   int r = controler.partieFinie(x, z, y, idJoueur);
+		    				   if(r!=0){
+		    					   System.out.println("Gagnant: "+r);
+		    					   //JOptionPane.showConfirmDialog(this, "Test");
+		    					   String txtPopup =null;
+		    					   if(r==1){
+		    						   txtPopup="Victoire de "+controler.getNomJoueur1()+" !";
+		    					   } else if(r==2) {
+		    						   txtPopup="Victoire de "+controler.getNomJoueur2()+" !";
+		    					   } else if(r==-1) {
+		    						   txtPopup="Match nul !";
+		    					   }
+		    					   Popup jd = new Popup(parent,"Partie finie",txtPopup,true);
+		    					   jd.showPopup();
+		    					   controler.initPlateau();
+		    				   }
+			    			   switchPanel();
+		    			   } else {
+		    				   setMonTour(false);
+		    				   pionPoser();
+		    				   int r = controler.partieFinie(x, z, y, idJoueur);
+		    				   if(r==-1){
+		    					   String txtPopup="Match nul !";
+		    					   Popup jd = new Popup(parent,"Partie finie",txtPopup,true);
+		    					   jd.showPopup();
+		    					   controler.initPlateau();
+		    				   }
+		    			   }
+		    		   }
+		    		   //((Sphere)tabSphere[x][y][0].getChild(0)).getAppearance().getName();
+		    		   //((Sphere)tabSphere[x][y][0].getChild(0)).setAppearance(null);
+		    		   //System.out.println(((Sphere)tabSphere1[x][y][0].getChild(0)));
+		    	   }
+	
+		    	   if(p.getClass().getSimpleName().equals("Sphere")){
+		    		  
+		    	   }
+		       }
+		       /*else if (s != null) {
+		    	   System.out.println("s: "+s.getClass().getSimpleName());
+		       }*/
+	
+		    }
+		}
 		
 	}
 	
 	public void switchPanel(){
 		((JeuGUI) jeuGui).switchPanel();
+	}
+	
+	public boolean isMonTour(){
+		return ((JeuGUI) jeuGui).isMonTour();
+	}
+	
+	public void setMonTour(boolean b){
+		((JeuGUI) jeuGui).setMonTour(b);
+	}
+	
+	public void pionPoser(){
+		((JeuGUI) jeuGui).pionPoser();
+	}
+	
+	
+
+	public int getLast_x() {
+		return last_x;
+	}
+
+	public int getLast_y() {
+		return last_y;
+	}
+
+	public int getLast_z() {
+		return last_z;
+	}
+
+	public int getLast_id() {
+		return last_id;
 	}
 
 	@Override
