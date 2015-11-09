@@ -1,8 +1,12 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.RenderingHints;
@@ -23,6 +27,7 @@ public class MenuGUI extends JPanel{
 	private JButton boutonQuitter = new JButton("Quitter");
 	private JButton boutonStat = new JButton("Statistique");
 	private JButton boutonPropos = new JButton("À propos");
+	private JButton boutonTest = new JButton("boutonTest");
 	private JFrame parent;
 	
 	Panel panel;
@@ -51,20 +56,26 @@ public class MenuGUI extends JPanel{
 			}
         }
 		
-		this.setLayout(new BorderLayout());
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		this.setLayout(new GridBagLayout());
+		this.add(boutonTest);
+		/*JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));*/
+		JPanel cell1 = new JPanel();
 
-		panel.add(boutonJouer);
-		panel.add(boutonStat);
-		panel.add(boutonPropos);
-		panel.add(boutonQuitter);
+	    cell1.setBackground(Color.YELLOW);
+
+	    cell1.setPreferredSize(new Dimension(60, 40));  
+
+		this.add(boutonJouer);
+		this.add(boutonStat);
+		this.add(boutonPropos);
+		this.add(boutonQuitter);
 		boutonJouer.addActionListener(new Jouer());
 		boutonQuitter.addActionListener(new Quitter());
 		boutonStat.addActionListener(new Stat());
 		boutonPropos.addActionListener(new Propos());
 		
-		this.add(panel, BorderLayout.PAGE_END);
+		//this.add(panel, BorderLayout.PAGE_END);
 		
 	}
 	
