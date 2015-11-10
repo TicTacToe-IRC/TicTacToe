@@ -485,7 +485,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    					   controler.switchJoueur();
 		    				   }
 		    				   
-			    			   switchPanel();
+		    				   switchPanel();
 			    			   hideCone();
 		    			   } else {
 		    				   setMonTour(false);

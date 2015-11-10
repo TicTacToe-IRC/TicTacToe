@@ -25,6 +25,8 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	private JFrame parent;
 	private boolean monTour = true;
 	
+	private static int compteTour = 0;
+	
 	JPanel 	panelJ1, panelJ2;
 	
 	JButton bFinTour1 = new JButton("Fin du tour");
@@ -41,7 +43,11 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	public JeuGUI(JFrame jf, TicTacToeControler controler){
 		this.parent = jf;
 		this.controler = controler;
+		if(compteTour%2!=0){
+			controler.switchJoueur();
+		}
 		init();
+		compteTour++;
 	}
 	
 	
@@ -88,6 +94,23 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 				panelJ2.setLayout(new BorderLayout());
 				panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur2()));
 				
+				
+				if(controler.getIdJoueur()==1){
+					panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur1()));
+					panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur2() ));
+						bFinTour1.setEnabled(false);
+						bGagner1.setEnabled(false);
+						bFinTour2.setEnabled(false);
+						bGagner2.setEnabled(false);
+				} else {
+					panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur1() ));
+					panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur2()));
+						bFinTour1.setEnabled(false);
+						bGagner1.setEnabled(false);
+						bFinTour2.setEnabled(false);
+						bGagner2.setEnabled(false);
+				}
+				
 		JLabel devise1 = new JLabel("<html><i>\""+controler.getDeviseJoueur1()+"\"</i></html>");
 		JLabel devise2 = new JLabel("<html><i>\""+controler.getDeviseJoueur2()+"\"</i></html>");
 				
@@ -103,10 +126,7 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		couleurJ2 = new JPanel();
 		couleurJ2.setBackground(new Color(cj2.getR(),cj2.getG(),cj2.getB()));
 		couleurJ2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		bFinTour1.setEnabled(false);
-		bGagner1.setEnabled(false);
-		bFinTour2.setEnabled(false);
-		bGagner2.setEnabled(false);
+		
 		
 		JLabel lcolor1 = new JLabel(cj1.getNom()+"  ");
 		lcolor1.setOpaque(false);

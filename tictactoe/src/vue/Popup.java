@@ -18,7 +18,7 @@ public class Popup extends JDialog {
 	public Popup(JFrame parent, String title, String txt, boolean modal){
 		super(parent, title, modal);
 		this.parent = parent;
-		this.setSize(400, 100);
+		this.setSize(500, 100);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 	    this.initComponent(txt);
@@ -50,6 +50,13 @@ public class Popup extends JDialog {
 				closePopup();
 			}
 		});
+		JButton bclose = new JButton("Continuer");
+		bclose.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closePopup();
+			}
+		});
 		
 		JPanel 	panelLabel = new JPanel();
 				panelLabel.setLayout(new BorderLayout());
@@ -61,6 +68,7 @@ public class Popup extends JDialog {
 		panelBouton.add(brejouer);
 		panelBouton.add(bnew);
 		panelBouton.add(bmenu);
+		panelBouton.add(bclose);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().add(jl, BorderLayout.CENTER);
 		this.getContentPane().add(panelBouton, BorderLayout.SOUTH);
