@@ -31,9 +31,6 @@ public class MenuGUI extends JPanel{
 	private JFrame parent;
 	
 	Panel panel;
-	final static String s1 = "carte 1";
-	final static String s2 = "carte 2";
-	
 	
 	public MenuGUI(JFrame parent){
 		super();
