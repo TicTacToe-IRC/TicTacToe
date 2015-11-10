@@ -13,9 +13,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 import model.StatRecord;
 import vue.APropos.Retour;
@@ -50,12 +54,21 @@ public class StatGUI extends JPanel {
 				e1.printStackTrace();
 			}
 	       }
+
+		JScrollBar vbar = new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 300);
+		JPanel jpStat = new JPanel();
+		jpStat.setOpaque(false);
+		jpStat.add(vbar);
+		jpStat.setLayout(new BoxLayout(jpStat, BoxLayout.PAGE_AXIS));
+		
+		JPanel jpStatJoueur = new JPanel();
 		
 		StatRecord stat = null;
 		try {
 			stat = StatRecord.getInstance();
 			for(String s : stat.getNomsJoueurs()){
-				
+				jpStatJoueur.setBorder(BorderFactory.createTitledBorder(s));
+				jpStat.add(jpStatJoueur);
 			}
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
@@ -71,6 +84,7 @@ public class StatGUI extends JPanel {
 			retour.addActionListener(new Retour());
 			
 		this.setLayout(new BorderLayout());
+		this.add(jpStat, BorderLayout.CENTER);
 		this.add(retour, BorderLayout.SOUTH);
 	}
 	
