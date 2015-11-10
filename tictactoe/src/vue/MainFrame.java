@@ -36,6 +36,8 @@ public class MainFrame extends JFrame {
 			this.getContentPane().add(new JeuGUI(this, controler));
 		} else if(s.equals("propos")){
 			this.getContentPane().add(new APropos(this));
+		} else if(s.equals("stat")){
+			this.getContentPane().add(new StatGUI(this));
 		}
 		this.repaint();
 		this.validate();

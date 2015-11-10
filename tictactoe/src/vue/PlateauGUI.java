@@ -40,6 +40,11 @@ import javax.vecmath.Vector3f;
 
 
 
+
+
+import model.StatRecord;
+
+
 //Etape 2 :
 //Importation des packages Java 3D
 import com.sun.j3d.utils.geometry.Box;
@@ -448,6 +453,18 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    			   if(!controler.isAnnonce()){
 		    				   int r = controler.partieFinie(x, z, y, idJoueur);
 		    				   if(r!=0){
+		    					try {
+									StatRecord stat = StatRecord.getInstance();
+									stat.putResultatPartie(controler.getNomJoueur1(), controler.getNomJoueur2(), r);
+									stat.store();
+								} catch (ClassNotFoundException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+										
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 		    					   System.out.println("Gagnant: "+r);
 		    					   //JOptionPane.showConfirmDialog(this, "Test");
 		    					   String txtPopup =null;

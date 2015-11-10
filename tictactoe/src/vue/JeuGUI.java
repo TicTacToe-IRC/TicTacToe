@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Observable;
 
 import javax.swing.BorderFactory;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Couleur;
+import model.StatRecord;
 import controler.TicTacToeControler;
 
 public class JeuGUI extends JPanel implements java.util.Observer{
@@ -238,6 +240,18 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 			boutonSupVisible(true);
 			int r = controler.partieFinie(pgui.getLast_x(), pgui.getLast_z(), pgui.getLast_y(), pgui.getLast_id());
 			System.out.println(r+" - "+pgui.getLast_x()+" - "+pgui.getLast_z()+" - "+pgui.getLast_y()+" - "+pgui.getLast_id());
+			try {
+				StatRecord stat = StatRecord.getInstance();
+				stat.putResultatPartie(controler.getNomJoueur1(), controler.getNomJoueur2(), r);
+				stat.store();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+					
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String txtPopup =null;
 		   if(r==pgui.getLast_id()){
 			   if(r==1){
