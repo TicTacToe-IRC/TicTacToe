@@ -230,6 +230,10 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	
 	public class Gagner implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
+			bFinTour1.setEnabled(false);
+			bGagner1.setEnabled(false);
+			bFinTour2.setEnabled(false);
+			bGagner2.setEnabled(false);
 			pgui.setFinJeu(true);
 			boutonSupVisible(true);
 			int r = controler.partieFinie(pgui.getLast_x(), pgui.getLast_z(), pgui.getLast_y(), pgui.getLast_id());
