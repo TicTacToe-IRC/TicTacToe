@@ -109,9 +109,9 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		bGagner2.setEnabled(false);
 		
 		JLabel lcolor1 = new JLabel(cj1.getNom()+"  ");
-		lcolor1.setBackground(null);
+		lcolor1.setOpaque(false);
 		JLabel lcolor2 = new JLabel(cj2.getNom()+"  ");
-		lcolor2.setBackground(null);
+		lcolor2.setOpaque(false);
 		
 		JPanel pcolor1 = new JPanel();
 		pcolor1.setLayout(new BoxLayout(pcolor1, BoxLayout.LINE_AXIS));
