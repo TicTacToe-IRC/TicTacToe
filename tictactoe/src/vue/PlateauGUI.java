@@ -284,6 +284,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		      plateauTG.addChild(tg);
 		      
 		      Cone cone1 = new Cone(0.05f,-0.05f, Cone.GENERATE_TEXTURE_COORDS,appBoule_j1);
+		      cone1.setPickable(false);
 		      Switch visibleCone1 = new Switch();
 		      visibleCone1.addChild(cone1);
 		      visibleCone1.setCapability(Switch.ALLOW_SWITCH_READ);
@@ -293,6 +294,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		      visibleCone1.setWhichChild(Switch.CHILD_NONE);
 		      
 		      Cone cone2 = new Cone(0.05f,-0.05f, Cone.GENERATE_TEXTURE_COORDS,appBoule_j2);
+		      cone2.setPickable(false);
 		      Switch visibleCone2 = new Switch();
 		      visibleCone2.addChild(cone2);
 		      visibleCone2.setCapability(Switch.ALLOW_SWITCH_READ);
@@ -337,6 +339,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 			for (int k = 0; k < 4; k++) {
 				
 				Sphere sphere = new Sphere(0.14f, Sphere.GENERATE_TEXTURE_COORDS, appBoule_j1);
+				sphere.setPickable(false);
 				Switch visibleSphere = new Switch();
 				visibleSphere.addChild(sphere);
 				visibleSphere.setCapability(Switch.ALLOW_SWITCH_READ);
@@ -348,6 +351,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 				tabSphere1[i][j][k]=visibleSphere;
 				
 				Sphere sphere2 = new Sphere(0.14f, Sphere.GENERATE_TEXTURE_COORDS, appBoule_j2);
+				sphere2.setPickable(false);
 				Switch visibleSphere2 = new Switch();
 				visibleSphere2.addChild(sphere2);
 				visibleSphere2.setCapability(Switch.ALLOW_SWITCH_READ);
