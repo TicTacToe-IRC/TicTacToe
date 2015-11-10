@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Panel;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -25,9 +26,8 @@ public class MenuGUI extends JPanel{
 	private Image background;
 	private JButton boutonJouer = new JButton("Jouer");
 	private JButton boutonQuitter = new JButton("Quitter");
-	private JButton boutonStat = new JButton("Statistique");
-	private JButton boutonPropos = new JButton("À propos");
-	private JButton boutonTest = new JButton("boutonTest");
+	private JButton boutonStat = new JButton("Statistiques");
+	private JButton boutonPropos = new JButton("A propos");
 	private JFrame parent;
 	
 	Panel panel;
@@ -55,21 +55,47 @@ public class MenuGUI extends JPanel{
 				e1.printStackTrace();
 			}
         }
+			
+	    this.setLayout(new GridBagLayout());
+	   
+	    GridBagConstraints gbc = new GridBagConstraints();
+	    
+	    gbc.gridx = 1;
+	    gbc.gridy = 0;
+	    
+	    gbc.insets = new Insets(5, 5, 5, 5);
+	    gbc.gridheight = 1;
+	    gbc.gridwidth = 1;
+	    gbc.ipady = 8;
+	    gbc.ipadx = 68;
+	    this.add(boutonJouer, gbc);
+	    //---------------------------------------------
+	    gbc.gridwidth = GridBagConstraints.REMAINDER;
+	    gbc.gridx = 1;
+	    gbc.gridy = 1;
+	    gbc.ipady = 8;
+	    gbc.ipadx = 25;
+	    this.add(boutonStat, gbc);
+	    //---------------------------------------------
+	    //Cette instruction informe le layout que c'est une fin de ligne
+	    gbc.gridwidth = GridBagConstraints.REMAINDER;
+	    gbc.gridx = 1;	
+	    gbc.gridy = 2;
+	    gbc.ipady = 8;
+	    gbc.ipadx = 38;
+	    this.add(boutonPropos, gbc);
+	    //---------------------------------------------
+	    gbc.gridx = 1;
+	    gbc.gridy = 3;
+	    gbc.gridwidth = 1;
+	    gbc.gridheight = 2;
+	    gbc.ipady = 8;
+	    gbc.ipadx = 50;
+	    //Celle-ci indique que la cellule se réplique de façon verticale
+	    gbc.fill = GridBagConstraints.VERTICAL;
+	    this.add(boutonQuitter, gbc);
 		
-		this.setLayout(new GridBagLayout());
-		this.add(boutonTest);
-		/*JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));*/
-		JPanel cell1 = new JPanel();
-
-	    cell1.setBackground(Color.YELLOW);
-
-	    cell1.setPreferredSize(new Dimension(60, 40));  
-
-		this.add(boutonJouer);
-		this.add(boutonStat);
-		this.add(boutonPropos);
-		this.add(boutonQuitter);
+		
 		boutonJouer.addActionListener(new Jouer());
 		boutonQuitter.addActionListener(new Quitter());
 		boutonStat.addActionListener(new Stat());
