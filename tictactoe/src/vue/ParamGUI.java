@@ -1,13 +1,22 @@
 package vue;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.Transparency;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,8 +33,8 @@ public class ParamGUI extends JPanel {
 	private JLabel jl, jl1, jl2, jl3, jl4;
 	private JTextField nom;
 	private JPanel jp1 = new JPanel(), jp2 = new JPanel(), jp3 = new JPanel();  
-	private JTextField nom1 = new JTextField("Joueur 1"), 
-			nom2 = new JTextField("Joueur 2"); 
+	private JTextField nom1 = new JTextField(), 
+			nom2 = new JTextField(); 
 	private JComboBox colorList1 = new JComboBox();
 	private JComboBox colorList2 = new JComboBox();
 	private Object lastItem1, lastItem2;
@@ -33,6 +42,7 @@ public class ParamGUI extends JPanel {
 	private JPanel couleur1 = new JPanel(), couleur2 = new JPanel();
 	private JTextField attaque1 = new JTextField(), attaque2 = new JTextField();
 	JCheckBox 	gagner;
+	private Image background;
 	
 	private JFrame parent;
 	private TicTacToeControler controler;
@@ -59,16 +69,33 @@ public class ParamGUI extends JPanel {
 	}
 	
 	public void init() {
+		
+		File g = new File("");
+		 String path = g.getAbsolutePath();
+		try {
+           this.background = ImageIO.read(new File(path+"/images/Gris.jpg"));
+       } 
+       catch (IOException e) {
+           try {
+				throw new IOException(e);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+       }
+		
 		jl = new JLabel("");
 		jl1 = new JLabel("");
 		jl2 = new JLabel("");
+		jl3 = new JLabel("");
 		
 		this.add(jl);
 		
-		/* Joueur 1 */
 		//this.setLayout(new BorderLayout());
-		nom1.setPreferredSize(new Dimension(150,30));
 		
+		/* Joueur 1 */
+	
+		nom1.setPreferredSize(new Dimension(150,30));
 		/*
 		JPanel b1 = new JPanel();
 		 b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
@@ -86,7 +113,7 @@ public class ParamGUI extends JPanel {
 		
 		jp1.setLayout(new BoxLayout(jp1,BoxLayout.PAGE_AXIS));
 		jp2.setLayout(new BoxLayout(jp2,BoxLayout.PAGE_AXIS));
-		
+
 		jp1.add(nom1);
 		jp1.add(jl);
 		
@@ -140,7 +167,6 @@ public class ParamGUI extends JPanel {
 				config.add(jp2);
 		
 		
-		
 		/* Validation */
 		
 		JButton valider = new JButton("Valider");
@@ -171,13 +197,24 @@ public class ParamGUI extends JPanel {
 		jp3.add(gbouton);
 		jp3.add(jpbouton);
 		
+		
+		/* On cache le background de tous les JPanels */
+		jp1.setOpaque(false);
+		jp2.setOpaque(false);
+		jp3.setOpaque(false);
+		config.setOpaque(false);
+		gbouton.setOpaque(false);
+		jpbouton.setOpaque(false);
+		gagner.setOpaque(false);
+		
 		//this.add(config, BorderLayout.CENTER);
 		//this.add(jp3, BorderLayout.SOUTH);
 		JPanel  general = new JPanel();
 				general.setLayout(new BoxLayout(general, BoxLayout.PAGE_AXIS));
 				general.add(config);
 				general.add(jp3);
-		this.add(general);
+				general.setOpaque(false);
+		this.add(general, BorderLayout.CENTER);
 		
 	}
 	
@@ -262,4 +299,13 @@ public class ParamGUI extends JPanel {
 
 		}
 	}
+	
+	@Override
+    public void paintComponent(Graphics g){
+        if(background!=null){
+            Graphics2D g2d = (Graphics2D)g;
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+        }
+    }
 }

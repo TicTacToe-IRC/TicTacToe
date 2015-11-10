@@ -24,10 +24,10 @@ import javax.swing.JPanel;
 
 public class MenuGUI extends JPanel{
 	private Image background;
-	private JButton boutonJouer = new JButton("Jouer");
-	private JButton boutonQuitter = new JButton("Quitter");
-	private JButton boutonStat = new JButton("Statistiques");
-	private JButton boutonPropos = new JButton("A propos");
+	private JButton boutonJouer = BoutonJouer.getInstance();
+	private BoutonQuitter boutonQuitter = BoutonQuitter.getInstance();
+	private BoutonStat boutonStat = BoutonStat.getInstance();
+	private BoutonApropos boutonPropos = BoutonApropos.getInstance();
 	private JFrame parent;
 	
 	Panel panel;
@@ -56,8 +56,8 @@ public class MenuGUI extends JPanel{
 			}
         }
 			
-	    this.setLayout(new GridBagLayout());
-	   
+		this.setLayout(new GridBagLayout());
+		   
 	    GridBagConstraints gbc = new GridBagConstraints();
 	    
 	    gbc.gridx = 1;
@@ -66,40 +66,48 @@ public class MenuGUI extends JPanel{
 	    gbc.insets = new Insets(5, 5, 5, 5);
 	    gbc.gridheight = 1;
 	    gbc.gridwidth = 1;
-	    gbc.ipady = 8;
-	    gbc.ipadx = 68;
+	    gbc.ipady = 20;
+	    gbc.ipadx = 70;
 	    this.add(boutonJouer, gbc);
 	    //---------------------------------------------
 	    gbc.gridwidth = GridBagConstraints.REMAINDER;
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;
-	    gbc.ipady = 8;
-	    gbc.ipadx = 25;
+	    gbc.ipady = 20;
+	    gbc.ipadx = 70;
 	    this.add(boutonStat, gbc);
 	    //---------------------------------------------
 	    //Cette instruction informe le layout que c'est une fin de ligne
 	    gbc.gridwidth = GridBagConstraints.REMAINDER;
 	    gbc.gridx = 1;	
 	    gbc.gridy = 2;
-	    gbc.ipady = 8;
-	    gbc.ipadx = 38;
+	    gbc.ipady = 20;
+	    gbc.ipadx = 70;
 	    this.add(boutonPropos, gbc);
 	    //---------------------------------------------
 	    gbc.gridx = 1;
 	    gbc.gridy = 3;
 	    gbc.gridwidth = 1;
 	    gbc.gridheight = 2;
-	    gbc.ipady = 8;
-	    gbc.ipadx = 50;
+	    gbc.ipady = 20;
+	    gbc.ipadx = 70;
 	    //Celle-ci indique que la cellule se réplique de façon verticale
 	    gbc.fill = GridBagConstraints.VERTICAL;
 	    this.add(boutonQuitter, gbc);
+	    
+	    if(boutonJouer.getActionListeners().length == 0){
+	    	boutonJouer.addActionListener(new Jouer());
+	    }
+		if(boutonQuitter.getActionListeners().length == 0){
+			boutonQuitter.addActionListener(new Quitter());
+		}
+		if(boutonStat.getActionListeners().length == 0){
+			boutonStat.addActionListener(new Stat());
+		}
 		
-		
-		boutonJouer.addActionListener(new Jouer());
-		boutonQuitter.addActionListener(new Quitter());
-		boutonStat.addActionListener(new Stat());
-		boutonPropos.addActionListener(new Propos());
+		if(boutonPropos.getActionListeners().length == 0){
+			boutonPropos.addActionListener(new Propos());
+		}
 		
 		//this.add(panel, BorderLayout.PAGE_END);
 		
