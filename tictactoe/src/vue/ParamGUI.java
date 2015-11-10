@@ -24,8 +24,8 @@ public class ParamGUI extends JPanel {
 	private JLabel jl, jl1, jl2, jl3, jl4;
 	private JTextField nom;
 	private JPanel jp1 = new JPanel(), jp2 = new JPanel(), jp3 = new JPanel();  
-	private JTextField nom1 = new JTextField(), 
-			nom2 = new JTextField(); 
+	private JTextField nom1 = new JTextField("Joueur 1"), 
+			nom2 = new JTextField("Joueur 2"); 
 	private JComboBox colorList1 = new JComboBox();
 	private JComboBox colorList2 = new JComboBox();
 	private Object lastItem1, lastItem2;

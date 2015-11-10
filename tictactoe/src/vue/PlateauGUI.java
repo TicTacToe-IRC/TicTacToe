@@ -80,6 +80,8 @@ public class PlateauGUI extends JPanel implements MouseListener, MouseMotionList
 	Appearance appPlateau = new Appearance();
 	Appearance appBaton = new Appearance();
 	 Appearance appFond = new Appearance();
+	 
+	 private boolean finJeu = false;
 	
 
 public PlateauGUI(JFrame parent, JPanel jeuGui, TicTacToeControler controler) {
@@ -402,7 +404,7 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(isMonTour()){
+		if(isMonTour() && !finJeu){
 			pickCanvas.setShapeLocation(e);
 		    PickResult result = pickCanvas.pickClosest();
 	
@@ -456,11 +458,16 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    					   } else if(r==-1) {
 		    						   txtPopup="Match nul !";
 		    					   }
+		    					   finJeu = true;
+		    					   ((JeuGUI) jeuGui).boutonSupVisible(true);
 		    					   Popup jd = new Popup(parent,"Partie finie",txtPopup,true);
 		    					   jd.showPopup();
 		    					   controler.initPlateau();
 		    				   }
-		    				   controler.switchJoueur();
+		    				   if(!finJeu){
+		    					   controler.switchJoueur();
+		    				   }
+		    				   
 			    			   switchPanel();
 			    			   hideCone();
 		    			   } else {
@@ -468,6 +475,8 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    				   pionPoser();
 		    				   int r = controler.partieFinie(x, z, y, idJoueur);
 		    				   if(r==-1){
+		    					   finJeu = true;
+		    					   ((JeuGUI) jeuGui).boutonSupVisible(true);
 		    					   String txtPopup="Match nul !";
 		    					   Popup jd = new Popup(parent,"Partie finie",txtPopup,true);
 		    					   jd.showPopup();
@@ -504,6 +513,10 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 				scl.setWhichChild(Switch.CHILD_NONE);
 			}
 		}
+	}
+	
+	public void setFinJeu(boolean b){
+		finJeu = b;
 	}
 	
 	public void switchPanel(){

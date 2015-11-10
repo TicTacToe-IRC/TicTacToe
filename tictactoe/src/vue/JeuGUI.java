@@ -30,6 +30,10 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	JButton bFinTour2 = new JButton("Fin du tour");
 	JButton bGagner2 = new JButton("J'ai gagné");
 	
+	JButton boutonMenu;
+	JButton boutonRejouer;
+	JButton boutonNew;
+	
 	private PlateauGUI pgui;
 	
 	public JeuGUI(JFrame jf, TicTacToeControler controler){
@@ -46,23 +50,41 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 				jp_east.setPreferredSize(new Dimension(200,400));
 				jp_east.setLayout(new BoxLayout(jp_east, BoxLayout.PAGE_AXIS));
 		
-		JButton boutonMenu = new JButton("Menu");
+		boutonMenu = new JButton("Menu");
 				boutonMenu.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						((MainFrame) parent).goTo("menu");
 					}
 				});
+		
+		boutonRejouer = new JButton("Revanche");
+				boutonRejouer.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						((MainFrame) parent).goTo("jeu");
+					}
+				});
+				
+		boutonNew = new JButton("Changer de joueurs");
+				boutonNew.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						((MainFrame) parent).goTo("param");
+					}
+				});
+				
 		JPanel 	panelMenu = new JPanel();
 				panelMenu.add(boutonMenu, BorderLayout.CENTER);
 				panelMenu.setPreferredSize(boutonMenu.getSize());
 		panelJ1 = new JPanel();
 				panelJ1.setLayout(new BorderLayout());
-				panelJ1.setBackground(Color.WHITE);
-				panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur1() ));
+				//panelJ1.setBackground(Color.WHITE);
+				//panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur1() ));
+				panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur1() ));
 		panelJ2 = new JPanel();
 				panelJ2.setLayout(new BorderLayout());
-				panelJ2.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur2()));
+				panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur2()));
 				
 		JLabel devise1 = new JLabel("<html><i>\""+controler.getDeviseJoueur1()+"\"</i></html>");
 		JLabel devise2 = new JLabel("<html><i>\""+controler.getDeviseJoueur2()+"\"</i></html>");
@@ -128,6 +150,8 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		panelJ2.add(devise2, BorderLayout.SOUTH);
 		
 		jp_east.add(boutonMenu);
+		jp_east.add(boutonRejouer);
+		jp_east.add(boutonNew);
 		jp_east.add(panelJ1);
 		jp_east.add(panelJ2);
 		
@@ -135,15 +159,19 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		pgui = new PlateauGUI(parent, this, controler);
 		this.add(pgui,BorderLayout.CENTER);
 		this.add(jp_east,BorderLayout.EAST);
+		
+
+		boutonSupVisible(false);
 	}
 	
 	public void switchPanel(){
-		if(panelJ1.getBackground().equals(Color.WHITE)){
-			System.out.println("ICI");
-			panelJ1.setBackground(null);
-			panelJ1.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur1()));
-			panelJ2.setBackground(Color.WHITE);
-			panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur2() ));
+		if(controler.getIdJoueur()==1){
+			//System.out.println("ICI");
+			//panelJ1.setBackground(null);
+			panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur1()));
+			//panelJ2.setBackground(Color.WHITE);
+			//panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur2() ));
+			panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur2() ));
 				bFinTour1.setEnabled(false);
 				bGagner1.setEnabled(false);
 				bFinTour2.setEnabled(false);
@@ -153,10 +181,11 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 			panelJ2.repaint();
 			panelJ2.revalidate();
 		} else {
-			panelJ1.setBackground(Color.WHITE);
-			panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur1() ));
-			panelJ2.setBackground(null);
-			panelJ2.setBorder(BorderFactory.createTitledBorder(controler.getNomJoueur2()));
+			//panelJ1.setBackground(Color.WHITE);
+			//panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur1() ));
+			panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur1() ));
+			//panelJ2.setBackground(null);
+			panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur2()));
 				bFinTour1.setEnabled(false);
 				bGagner1.setEnabled(false);
 				bFinTour2.setEnabled(false);
@@ -177,7 +206,7 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	}
 	
 	public void pionPoser(){
-		if(panelJ1.getBackground().equals(Color.WHITE)){
+		if(controler.getIdJoueur()==1){
 			bFinTour1.setEnabled(true);
 			bGagner1.setEnabled(true);
 			bFinTour2.setEnabled(false);
@@ -201,6 +230,8 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	
 	public class Gagner implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
+			pgui.setFinJeu(true);
+			boutonSupVisible(true);
 			int r = controler.partieFinie(pgui.getLast_x(), pgui.getLast_z(), pgui.getLast_y(), pgui.getLast_id());
 			System.out.println(r+" - "+pgui.getLast_x()+" - "+pgui.getLast_z()+" - "+pgui.getLast_y()+" - "+pgui.getLast_id());
 			String txtPopup =null;
@@ -221,6 +252,11 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		   jd.showPopup();
 		   controler.initPlateau();
 		}
+	}
+	
+	public void boutonSupVisible(boolean b){
+		boutonRejouer.setEnabled(b);
+		boutonNew.setEnabled(b);
 	}
 
 	@Override
