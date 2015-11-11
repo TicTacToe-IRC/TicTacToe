@@ -43,8 +43,9 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	public JeuGUI(JFrame jf, TicTacToeControler controler){
 		this.parent = jf;
 		this.controler = controler;
-		if(compteTour%2!=0){
-			controler.switchJoueur();
+
+		if((compteTour%2!=0 && controler.getIdJoueur()==1) || (compteTour%2==0 && controler.getIdJoueur()!=1)){
+			this.controler.switchJoueur();
 		}
 		init();
 		compteTour++;
@@ -87,8 +88,6 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 				panelMenu.setPreferredSize(boutonMenu.getSize());
 		panelJ1 = new JPanel();
 				panelJ1.setLayout(new BorderLayout());
-				//panelJ1.setBackground(Color.WHITE);
-				//panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur1() ));
 				panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur1() ));
 		panelJ2 = new JPanel();
 				panelJ2.setLayout(new BorderLayout());
@@ -178,7 +177,7 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 		jp_east.add(panelJ2);
 		
 		this.setLayout(new BorderLayout());
-		pgui = new PlateauGUI(parent, this, controler);
+		pgui = new PlateauGUI(parent, this, this.controler);
 		this.add(pgui,BorderLayout.CENTER);
 		this.add(jp_east,BorderLayout.EAST);
 		
@@ -188,11 +187,7 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 	
 	public void switchPanel(){
 		if(controler.getIdJoueur()==1){
-			//System.out.println("ICI");
-			//panelJ1.setBackground(null);
 			panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur1()));
-			//panelJ2.setBackground(Color.WHITE);
-			//panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur2() ));
 			panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur2() ));
 				bFinTour1.setEnabled(false);
 				bGagner1.setEnabled(false);
@@ -203,10 +198,7 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 			panelJ2.repaint();
 			panelJ2.revalidate();
 		} else {
-			//panelJ1.setBackground(Color.WHITE);
-			//panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,2),controler.getNomJoueur1() ));
 			panelJ1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(),controler.getNomJoueur1() ));
-			//panelJ2.setBackground(null);
 			panelJ2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),controler.getNomJoueur2()));
 				bFinTour1.setEnabled(false);
 				bGagner1.setEnabled(false);
@@ -246,7 +238,7 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 			controler.switchJoueur();
 			switchPanel();
 			pgui.hideCone();
-			setMonTour(true);
+			monTour=true;
 		}
 	}
 	
@@ -256,10 +248,11 @@ public class JeuGUI extends JPanel implements java.util.Observer{
 			bGagner1.setEnabled(false);
 			bFinTour2.setEnabled(false);
 			bGagner2.setEnabled(false);
+			
 			pgui.setFinJeu(true);
+			
 			boutonSupVisible(true);
 			int r = controler.partieFinie(pgui.getLast_x(), pgui.getLast_z(), pgui.getLast_y(), pgui.getLast_id());
-			System.out.println(r+" - "+pgui.getLast_x()+" - "+pgui.getLast_z()+" - "+pgui.getLast_y()+" - "+pgui.getLast_id());
 			try {
 				StatRecord stat = StatRecord.getInstance();
 				stat.putResultatPartie(controler.getNomJoueur1(), controler.getNomJoueur2(), r);

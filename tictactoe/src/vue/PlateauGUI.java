@@ -42,7 +42,9 @@ import javax.vecmath.Vector3f;
 
 
 
+
 import model.StatRecord;
+
 
 
 //Etape 2 :
@@ -93,6 +95,7 @@ public PlateauGUI(JFrame parent, JPanel jeuGui, TicTacToeControler controler) {
 	this.parent = parent;
 	this.jeuGui = jeuGui;
 	this.controler = controler;
+	
  this.setLayout(new BorderLayout());
 
  // Etape 3 :
@@ -109,13 +112,6 @@ canvas3D =
  simpleU.getViewingPlatform().setNominalViewingTransform();
  BranchGroup scene = createSceneGraph(canvas3D);
  scene.compile();
- 
- ViewPlatform myPlatform = new ViewPlatform();
-	Transform3D tran = new Transform3D();
-	tran.set(new Vector3d((-13), (-3), (-33)));
-	TransformGroup g = new TransformGroup();
-	g.setTransform(tran);
-	g.addChild(myPlatform);
 	
  simpleU.addBranchGraph(scene);
 }
@@ -182,45 +178,38 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 	 Appearance appBoule_j2 = new Appearance();
 		 		appBoule_j2.setCapability(Appearance.ALLOW_TEXTURE_WRITE);
 		 		appBoule_j2.setCapability(Appearance.ALLOW_TEXTURE_READ);
-	 
-	 Runtime runtime = Runtime.getRuntime();
-	   System.out.println(runtime.freeMemory()/(1024*1024));
+
 	
 	 Texture texture_bois1 = new TextureLoader(image_bois1).getTexture();
 			 texture_bois1.setBoundaryModeS(Texture.WRAP);
 			 texture_bois1.setBoundaryModeT(Texture.WRAP);
 			 texture_bois1.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 			 
-			 System.out.println(runtime.freeMemory()/(1024*1024));
 	 
 	 Texture texture_bois2 = new TextureLoader(image_bois2).getTexture();
 			 texture_bois2.setBoundaryModeS(Texture.WRAP);
 			 texture_bois2.setBoundaryModeT(Texture.WRAP);
 			 texture_bois2.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 			 
-			 System.out.println(runtime.freeMemory()/(1024*1024));
 			 
 	Texture texture_bois3 = new TextureLoader(image_bois3).getTexture();
 			texture_bois3.setBoundaryModeS(Texture.WRAP);
 			texture_bois3.setBoundaryModeT(Texture.WRAP);
 			texture_bois3.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 			
-			System.out.println(runtime.freeMemory()/(1024*1024));
-			 
+			
 	Texture texture_j1 = new TextureLoader(image_joueur1).getTexture();
 			texture_j1.setBoundaryModeS(Texture.WRAP);
 			texture_j1.setBoundaryModeT(Texture.WRAP);
 			texture_j1.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 			
-			System.out.println(runtime.freeMemory()/(1024*1024));
-			 
+
 	Texture texture_j2 = new TextureLoader(image_joueur2).getTexture();
 			texture_j2.setBoundaryModeS(Texture.WRAP);
 			texture_j2.setBoundaryModeT(Texture.WRAP);
 			texture_j2.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
 			
-			System.out.println(runtime.freeMemory()/(1024*1024));
-	
+
 	TextureAttributes texAttr = new TextureAttributes();
 	texAttr.setTextureMode(TextureAttributes.MODULATE);
 	
@@ -621,13 +610,11 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    			   for(Switch scl : cl){
 		    				   if(x==coneList1.indexOf(cl) && y==cl.indexOf(scl)){
 		    					   if(scl.getWhichChild() == Switch.CHILD_NONE){
-		    						   System.out.println("test");
 		    						   scl.setWhichChild(Switch.CHILD_ALL);
 		    					   }
 		    						   
 		    				   } else {
 		    					   if(scl.getWhichChild() == Switch.CHILD_ALL){
-		    						   System.out.println("OUI");
 		    						   scl.setWhichChild(Switch.CHILD_NONE);
 		    					   }
 		    				   }
@@ -648,13 +635,11 @@ public BranchGroup createSceneGraph(Canvas3D canvas) {
 		    			   for(Switch scl : cl){
 		    				   if(x==coneList2.indexOf(cl) && y==cl.indexOf(scl)){
 		    					   if(scl.getWhichChild() == Switch.CHILD_NONE){
-		    						   System.out.println("test");
 		    						   scl.setWhichChild(Switch.CHILD_ALL);
 		    					   }
 		    						   
 		    				   } else {
 		    					   if(scl.getWhichChild() == Switch.CHILD_ALL){
-		    						   System.out.println("OUI");
 		    						   scl.setWhichChild(Switch.CHILD_NONE);
 		    					   }
 		    				   }
