@@ -24,7 +24,7 @@ public class BoutonApropos extends JButton{
 		File g = new File("");
 		 String path = g.getAbsolutePath();
 		try {
-           this.background = ImageIO.read(new File(path+"/images/boutons/Apropos.jpg"));
+           this.background = ImageIO.read(new File(path+"/images/boutons/Apropos.png"));
        } 
        catch (IOException e) {
            try {

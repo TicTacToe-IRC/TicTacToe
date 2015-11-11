@@ -25,7 +25,7 @@ public class BoutonStat extends JButton{
 		File g = new File("");
 		 String path = g.getAbsolutePath();
 		try {
-           this.background = ImageIO.read(new File(path+"/images/boutons/Statistiques.jpg"));
+           this.background = ImageIO.read(new File(path+"/images/boutons/Stats.png"));
        } 
        catch (IOException e) {
            try {

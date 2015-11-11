@@ -25,7 +25,7 @@ public class BoutonQuitter extends JButton{
 		File g = new File("");
 		 String path = g.getAbsolutePath();
 		try {
-           this.background = ImageIO.read(new File(path+"/images/boutons/Quitter.jpg"));
+           this.background = ImageIO.read(new File(path+"/images/boutons/Quitter.png"));
        } 
        catch (IOException e) {
            try {

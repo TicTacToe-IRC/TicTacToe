@@ -63,31 +63,31 @@ public class MenuGUI extends JPanel{
 	    gbc.insets = new Insets(5, 5, 5, 5);
 	    gbc.gridheight = 1;
 	    gbc.gridwidth = 1;
-	    gbc.ipady = 20;
-	    gbc.ipadx = 70;
+	    gbc.ipady = 50;
+	    gbc.ipadx = 100;
 	    this.add(boutonJouer, gbc);
 	    //---------------------------------------------
 	    gbc.gridwidth = GridBagConstraints.REMAINDER;
 	    gbc.gridx = 1;
 	    gbc.gridy = 1;
-	    gbc.ipady = 20;
-	    gbc.ipadx = 70;
+	    gbc.ipady = 50;
+	    gbc.ipadx = 100;
 	    this.add(boutonStat, gbc);
 	    //---------------------------------------------
 	    //Cette instruction informe le layout que c'est une fin de ligne
 	    gbc.gridwidth = GridBagConstraints.REMAINDER;
 	    gbc.gridx = 1;	
 	    gbc.gridy = 2;
-	    gbc.ipady = 20;
-	    gbc.ipadx = 70;
+	    gbc.ipady = 50;
+	    gbc.ipadx = 100;
 	    this.add(boutonPropos, gbc);
 	    //---------------------------------------------
 	    gbc.gridx = 1;
 	    gbc.gridy = 3;
 	    gbc.gridwidth = 1;
 	    gbc.gridheight = 2;
-	    gbc.ipady = 20;
-	    gbc.ipadx = 70;
+	    gbc.ipady = 50;
+	    gbc.ipadx = 100;
 	    //Celle-ci indique que la cellule se réplique de façon verticale
 	    gbc.fill = GridBagConstraints.VERTICAL;
 	    this.add(boutonQuitter, gbc);
